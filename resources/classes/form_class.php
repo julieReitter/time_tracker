@@ -10,22 +10,29 @@
          $this -> elements[] = $content;
       }
       
-      public function dropDown($name, $options = array(), $selected=array()){
+      public function dropDown($name, $options = array(), $selected=array(), $multiple=false){
          //Options is assoc id => val
-         $content = "<select name=$name>";
-         foreach($options as $key=>$value){
+         $content = "<select name=$name ";
+			if($multiple){
+				$content .= " multiple='multiple'";
+			}
+			$content .= " >";
+			
+			//Options Setup 
+			if(!is_array($selected)) $selected = array($selected);
+			foreach($options as $key=>$value){
             $content .= "<option value='$key'";
             if(in_array($value, $selected)){
                $content .= "selected='selected'";
             }
             $content .= ">$value</option>";
          }
-         $content .= "</select>";
+			$content .= "</select>";
          $this -> elements[] = $content;
       }
       
       public function hidden($name, $value=""){
-         $content = "<input type='hidden' name=$name value=$value/>";
+         $content = "<input type='hidden' name=$name value=$value />";
          $this -> elements[] = $content;
       }
       

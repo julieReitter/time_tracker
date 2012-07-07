@@ -1,18 +1,25 @@
+<?php include("resources/connection.php");?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Daily Grind | Time Tracking &amp Project Managment</title>
+<!-- Styles -->
+<link rel="stylesheet/less" type="text/css" href="<?php echo ROOT . "/css/global.less";?>"/>
+<!-- Third Party Scripts-->
+<script src="<?php echo ROOT . "/resources/lib/jquery-1.7.2.min.js";?>" type="text/javascript"></script>
+<script src="<?php echo ROOT . "/resources/lib/less-1.3.0.min.js";?>" type="text/javascript"></script>
+<!-- Application Scripts-->
 </head>
 <body>
 	<header>
 		<div id="logo"></div>
 		<nav id="app-navigation">
 			<ul>
-				<li><a href="home" class="home"></a></li>
-				<li><a href="time" class="time"></a></li>
-				<li><a href="tasks" class="tasks"></a></li>
-				<li><a href="money" class="money"></a></li>
+				<li><a href="index.php" class="home"></a></li>
+				<li><a href="time.php" class="time"></a></li>
+				<li><a href="tasks.php" class="tasks"></a></li>
+				<li><a href="income.php" class="money"></a></li>
 				<li>
 					<ul>
 						<li><a href="#">All Projects</a></li>

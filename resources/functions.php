@@ -54,4 +54,10 @@ function spamcheck($field){
   }
 }
 
+function ifIsset(&$var, $default = NULL) {
+   $s = $var;
+	return $s;
+	#isset($var) ? $var : $default;
+}
+
 ?>

@@ -1,8 +1,9 @@
 <?php
 
-class FormValidation extends Form {
+class FormValidation extends Form{
    public $errors = array();
    public $validations = array();
+	public $formIsValid = false;
    
    public function validateExistence($all_elements){
       //Check that an item with a star is not empty
@@ -75,10 +76,9 @@ class FormValidation extends Form {
             return $this->errors;
          }
       }
-      
-      if($valid){
-         return 'valid';
-      }
+		if($valid){
+			$this->formIsValid = true;
+		}
    }
 }//close form validation class
 
