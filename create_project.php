@@ -1,11 +1,13 @@
 <?php
+	include("header.php");
 	include("actions.php");
-   
-	$clients = array("0" => "Bob");
+
+	$clients = array("0" => "Clients");
+	$projectTypes = array("0"=>"Web Design");
 	
    $f = new Form();
    //Form Fields
-   $f -> hidden("type", "project");
+   $f -> hidden("form_type", "project");
    $f -> label("project[name]", "Project Name");
    $f -> textField("project[name*]", true, ifIsset($value['name*']));
    $f -> dropDown("project[client]", $clients, ifIsset($value['client']));
@@ -15,7 +17,7 @@
    $f -> textField("project[budget*]", true, ifIsset($value['budget']));
    $f -> drawForm("new-project", "create_project.php", "Create&nbsp;Project");
 	
-	if($errors){
+	if(isset($errors)){
 		echo print_r($errors);
 	}
 

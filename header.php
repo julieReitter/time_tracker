@@ -1,4 +1,21 @@
-<?php include("resources/connection.php");?>
+<?php
+	require("resources/connection.php");
+	require("resources/functions.php");
+	
+	require("resources/classes/project_class.php");
+	require("resources/classes/task_class.php");
+	require("resources/classes/time_class.php");
+	require("resources/classes/income_class.php");
+	require("resources/classes/form_class.php");
+	require("resources/classes/form_validation_class.php");
+	
+	session_start();
+	$user = $_SESSION['user_id'];
+	if(empty($user)){
+		header("Location: login.php");	
+	}
+	$projects = getAllProjects($user);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -23,8 +40,9 @@
 				<li>
 					<ul>
 						<li><a href="#">All Projects</a></li>
-						<li><a href="#">Project 1</a></li>
-						<li><a href="#">Create New Project</a>
+						<?php foreach($projects as $proj): ?>
+						<li><a href="#"><?php echo $proj->name; ?></a></li>
+						<?php endforeach; ?>
 					</ul>
 				</li>
 			</ul>

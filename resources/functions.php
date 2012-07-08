@@ -44,6 +44,65 @@ function validateUser($email, $password){
 	return $user;	
 }//close Validate User
 
+/******************************
+ * PROJECT FUNCTIONS
+ ******************************/
+function getAllProjects($user){
+	//Gets all projects and returns array of project objects
+	$getAllQuery = "SELECT * FROM projects WHERE user_id = $user";
+	$retrieveAll = mysql_query($getAllQuery);
+	$projects = array();
+
+	while($all = mysql_fetch_assoc($retrieveAll)){
+		$p = new Project();
+		$p->id = $all['project_id'];
+		$p->name = $all['project_name'];
+		$p->budget = $all['project_budget'];
+		$p->rate = $all['hr_rate'];
+		$p->client = $all['client_id'];
+		$projects[] = $p;
+	}
+	
+	return $projects;
+}
+
+function getAllTasks($projectId=NULL, $limit=NULL){
+	//Gets all tasks and returns array of tasks objects
+	$getAllQuery = "SELECT * FROM tasks ";
+	//Limits by project id if set
+	if(isset($projectId)){
+		$getAllQuery .= " WHERE project_id = $projectId ";
+	}
+	if(isset($limit)){
+		$getAllQuery .= " LIMIT $limit";
+	}
+	$retrieveAll = mysql_query($getAllQuery);
+	$tasks = array();
+	
+	while($all = mysql_fetch_array($retrieveAll)){
+		$t = new Task();
+		$t->id = $all['task_id'];
+		$t->title = $all['task_title'];
+		$t->notes = $all['notes'];
+		$t->milestone = $all['milestone'];
+		$t->expectedTimeframw = $all['expected_time'];
+		$t->dueDate = $all['due_date'];
+		$t->status = $all['status'];
+		$tasks[] = $t;
+	}
+	return $tasks;
+}
+
+function calcTimeSpent($projectId=NULL){
+	$query = "SELECT SUM(time_amt) AS time_amt FROM time
+				WHERE project_id = $projectId";
+	$retrieve = mysql_query($query);
+	$results = mysql_fetch_assoc($retrieve);
+	
+	$time = $results['time_amt'];
+	return isset($time) ? $time : "00:00:00";
+}
+
 function spamcheck($field){
   $field=filter_var($field, FILTER_SANITIZE_EMAIL);
 

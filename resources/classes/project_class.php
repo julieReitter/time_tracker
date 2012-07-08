@@ -15,9 +15,9 @@ class Project {
 	//=========================
 		
 	//Project details
+	public $id = NULL;
 	public $name = "Untitled Project";
 	public $budget = NULL;
-	public $type = "Unknown";
 	public $rate = 0.00;
 	
 	//Project Client Information - Get client ID
@@ -30,16 +30,33 @@ class Project {
 	
 	//=========================
 	// METHODS
-	//=========================
-	
-	public function create(){
+	//=========================		
+	public function create($name, $budget, $rate, $client){
+		$this->name = $name;
+		$this->budget = $budget;
+		$this->rate = $rate;
+		$this->client = $client;
+		
 		$newQuery = "INSERT INTO projects (project_name, client_id, hr_rate, project_budget, user_id)
 					VALUES ('$this->name', '$this->client', '$this->rate', '$this->budget', '$user')";
 		mysql_query($newQuery);
 	}
 	
-	public function read(){
+	public function get($columns, $params=null, $by=null, $limit=null){
+		//performs query to created a project array
+		$projectQuery = "SELECT $columns FROM projects WHERE project_id = $this->id ";
+		if($params) $projectQuery .= "AND " . $params;
+		if($by) $projectQuery .= $by;
+		if($limit) $projectQuery .= $limit;
 		
+		$results = my_sql($projectQuery);
+		
+		$obj = mysql_fetch_object($results);
+		
+		$this->name = $obj.project_name;
+		$this->budget = $obj.project_budget;
+		$this->rate = $obj.hr_rate;
+		$this->client = $obj.client_id;
 	}
 	
 	public function destroy(){

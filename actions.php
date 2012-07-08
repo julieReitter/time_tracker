@@ -1,11 +1,6 @@
 <?php
-   include('resources/classes/project_class.php');
-   include("resources/classes/form_class.php");
-   include('resources/classes/form_validation_class.php');
-	include("resources/functions.php");
-
-   if(!empty($_POST['type'])){
-      $type = $_POST['type'];
+   if(!empty($_POST['form_type'])){
+      $type = $_POST['form_type'];
       switch($type){
          case 'project':
 				createProject();
@@ -35,9 +30,10 @@
       $valid->completeValidation();
 		
       if($valid->formIsValid){
-         echo "valid";
-         $p = new Project($elements['name*'], $elements['budget*'],
-                          $elements['type'], $elements['rate'], $elements['client']);
+         $p = new Project();
+			$p->create($elements['name*'], $elements['budget*'],
+                    $elements['rate'], $elements['client']);
+			header("Location: index.php");
       }else{
 			global $value, $errors;
 			$value = $elements;

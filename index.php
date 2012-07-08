@@ -1,50 +1,45 @@
 <?php
 	require("header.php");
-	
-	session_start();
-	$user = $_SESSION['user_id'];
-	if(empty($user)){
-		header("Location: login.php");	
-	}
-	
-	echo "Hello $user";
 ?>
 
 <section id="content">
-	<section id="calander">
-		<div class="day">
-			<h3>Sun, June 30</h3>
-			<ul>
-				<li>Task</li>
-			</ul>
-		</div>
-		<!-- day * 7-->
-	</section>
+
+	<?php #include("includes/calendar.php");?>
 	
 	<section id="projects">
+		<?php foreach($projects as $proj): ?>
 		<div class="project module">
 			<div class="header">
-				<h2>Project Title</h2>
+				<h2><?php echo $proj->name; ?></h2>
 				<ul>
 					<li>Play</li>
 					<li>Add</li>
-					<li>Contact Client</li>
+					<li>Contact Client
+						<ul>
+							<?php echo $proj->client; ?>
+						</ul>
+					</li>		
 				</ul>
 			</div>
 			
 			<ul class="highlights">
+				<?php
+					$tasks = getAllTasks($proj->id, 3);
+					foreach($tasks as $task):
+				?>
 				<li class="task">
-					<span class="date">Jun 30</span>
-					<h3>Title</h3>
-					<p>Content</p>
-					<span class="button"></span>
+					<span class="date"><?php echo $task->dueDate;?> </span>
+					<h3><?php echo $task->title; ?></h3>
+					<p><?php echo $task->notes;?></p>
+					<span class="button timer"></span>
 				</li>
+				<?php endforeach; //Tasks loop ?>
 			</ul>
 			
 			<div class="overview">
 				<span class="time-spent">
 					Time Spent 
-					<h4>15:00</h4>
+					<h4><?php echo calcTimeSpent($proj->id);?></h4>
 				</span>
 				<span class="income">
 					Income
@@ -62,11 +57,10 @@
 			</div>
 			
 		</div><!-- Close Project Module -->
-		
+		<?php endforeach; ?>
 		<div class="new">
 			<h4>Create New Project</h4>
 		</div>
-		
 	</section><!-- Close Projects -->
 	
 </section><!--Close Content-->
