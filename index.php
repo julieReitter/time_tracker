@@ -4,7 +4,7 @@
 
 <section id="content">
 
-	<?php #include("includes/calendar.php");?>
+	<?php include("includes/calendar.php");?>
 	
 	<section id="projects">
 		<?php foreach($projects as $proj): ?>
@@ -59,7 +59,7 @@
 		</div><!-- Close Project Module -->
 		<?php endforeach; ?>
 		<div class="new">
-			<h4>Create New Project</h4>
+			<h4><a href="create_project.php">Create New Project</a></h4>
 		</div>
 	</section><!-- Close Projects -->
 	

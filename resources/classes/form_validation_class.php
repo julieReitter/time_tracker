@@ -20,20 +20,20 @@ class FormValidation extends Form{
       return $valid;
    }
    
-   public function validatesFormat($element, $format){
+   public function validateFormat($element, $format){
       //Validates and elements based on format regex
       $valid = false;
-      $regex = filter_var($format, FILTER_VALIDATE_REGEXP);
-      if($regex){
-         if(preg_match($format, $element)) $valid = true;
-      }
-      if(!$valid) $this->$errors[$element] = "Incorrect Format"; 
+      #$regex = filter_var($format, FILTER_VALIDATE_REGEXP);
+
+      if(preg_match($format, $element)) $valid = true;
+
+      if(!$valid) $this->errors[$element] = "Incorrect Format"; 
 
       $this->validations[] = $valid;
       return $valid;
    }
    
-   public function validatesEmail($emailElement){
+   public function validateEmail($emailElement){
       //Validates email format
       $valid = false;
       $field=filter_var($field, FILTER_SANITIZE_EMAIL);
@@ -45,7 +45,7 @@ class FormValidation extends Form{
       return $valid;
    }
    
-   public function validatesNumber($element, $key, $min=0, $max=null){
+   public function validateNumber($element, $key, $min=0, $max=null){
       //Validates a number is a number and is between the min and max
       //If format is optional - for time example
       $valid = false;
@@ -64,7 +64,7 @@ class FormValidation extends Form{
       return $valid;
    }
    
-   public function validatesUniqueness($element){
+   public function validateUniqueness($element){
       //Validates if element matches another   
    }
    

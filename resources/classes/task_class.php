@@ -42,6 +42,20 @@ class Task{
 		
 	}
 	
+	public function get($id){
+		$getTaskQuery = "SELECT * FROM tasks WHERE task_id = $id";
+		$retrieveGet = mysql_query($getTaskQuery);
+		$obj = mysql_fetch_assoc($retrieveGet);
+		
+		$this->id = $id;
+		$this->title = $obj['task_title'];
+		$this->notes = $obj['notes'];
+		$this->milestone = $obj['milestone'];
+		$this->expectedTimeframe = $obj['expected_time'];
+		$this->dueDate = $obj['due_date'];
+		$this->status = $obj['status'];
+	}
+	
 	public function destroy(){
 		
 	}

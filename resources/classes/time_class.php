@@ -1,13 +1,14 @@
 
 <?php
 	
-class Time{
+class Time {
 	//=========================
 	// PROPERTIES
 	//=========================
-	public $amount = 00.00;
-	public $start = 00.00;
-	public $end = 00.00;
+	public $id = NULL;
+	public $amount = NULL;
+	public $start = NULL;
+	public $end = NULL;
 	public $date = '';
 	public $task = NULL;
 	
@@ -15,7 +16,13 @@ class Time{
 	// METHODS
 	//=========================
 	
-	public function create(){
+	public function create($amount, $start, $end, $date, $project=NULL, $task){
+		$this->amount = $amount;
+		$this->start = $start;
+		$this->end = $end;
+		$this->date = $date;
+		$this->task = $task;
+		
 		$newQuery = "INSERT INTO time (time_amt, start_time, end_time, the_date, project_id, task_id)
 					VALUES ('$this->amount', 
 							'$this->start',
@@ -24,6 +31,7 @@ class Time{
 							'$project',
 							'$this->task')";
 		mysql_query($newQuery);
+		echo $newQuery;
 	}
 	
 	public function read(){

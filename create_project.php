@@ -5,6 +5,7 @@
 	$clients = array("0" => "Clients");
 	$projectTypes = array("0"=>"Web Design");
 	
+	echo "<section id='content'>";
    $f = new Form();
    //Form Fields
    $f -> hidden("form_type", "project");
@@ -20,5 +21,5 @@
 	if(isset($errors)){
 		echo print_r($errors);
 	}
-
+	echo "</section>";
 ?>

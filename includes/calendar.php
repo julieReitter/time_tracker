@@ -13,19 +13,35 @@
 	while($row = mysql_fetch_assoc($calendarResults)){
 		$calendarData[$row['due_date']][] = $row['task_title'];
 	}
+		
 ?>
-<section id="calander">
-	<?php foreach($calendarData as $day=>$tasks): ?>
-		<div class="day">
-			<h3><?php echo $day;?></h3>
-			<ul>
+<section id="calendar">
+	<?php for($i=0; $i < 7; $i++): ?>
+		<div class="day module">
+			<h3>
 				<?php
-					foreach($tasks as $task){
-						echo "<li> $task </li>";
-					}
+					$day = getdate(strtotime("$i day"));
+					echo substr($day['weekday'], 0, 3) . ", ";
+					echo substr($day['month'], 0, 4) . " ";
+					echo $day['mday'];
 				?>
+			</h3>
+			<ul>
+			<?php
+				//compare dates
+				$monthValue = $day['mon'];
+				if($monthValue < 10) $monthValue = "0$monthValue";
+				$thisDate = $day['year'] . "-" . $monthValue . "-" . $day['mday'];
+				
+				if(isset($calendarData[$thisDate])){
+					$todaysTasks = $calendarData[$thisDate];
+					foreach($todaysTasks as $key=>$value){
+						echo "<li> $value </li>";
+					}
+				}
+			?>
 			</ul>
 		</div>
-	<?php endforeach; ?>
+	<?php endfor; ?>
 		<!-- day * 7-->
 </section>

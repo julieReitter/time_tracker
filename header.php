@@ -22,7 +22,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Daily Grind | Time Tracking &amp Project Managment</title>
 <!-- Styles -->
-<link rel="stylesheet/less" type="text/css" href="<?php echo ROOT . "/css/global.less";?>"/>
+<link rel="stylesheet/less" type="text/css" href="<?php echo ROOT . "/css/main.less";?>"/>
 <!-- Third Party Scripts-->
 <script src="<?php echo ROOT . "/resources/lib/jquery-1.7.2.min.js";?>" type="text/javascript"></script>
 <script src="<?php echo ROOT . "/resources/lib/less-1.3.0.min.js";?>" type="text/javascript"></script>
@@ -30,20 +30,20 @@
 </head>
 <body>
 	<header>
-		<div id="logo"></div>
+		<div id="logo">Daily Grind</div>
 		<nav id="app-navigation">
 			<ul>
-				<li><a href="index.php" class="home"></a></li>
-				<li><a href="time.php" class="time"></a></li>
-				<li><a href="tasks.php" class="tasks"></a></li>
-				<li><a href="income.php" class="money"></a></li>
+				<li><a href="index.php" class="home">H</a></li>
+				<li><a href="time.php" class="time">Ti</a></li>
+				<li><a href="tasks.php" class="tasks">Ta</a></li>
+				<li><a href="income.php" class="money">M</a></li>
 				<li>
-					<ul>
-						<li><a href="#">All Projects</a></li>
+					<Select>
+						<option><a href="#">All Projects</a></option>
 						<?php foreach($projects as $proj): ?>
-						<li><a href="#"><?php echo $proj->name; ?></a></li>
+						<option><a href="#"><?php echo $proj->name; ?></a></option>
 						<?php endforeach; ?>
-					</ul>
+					</select>
 				</li>
 			</ul>
 		</nav>

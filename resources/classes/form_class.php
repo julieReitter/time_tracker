@@ -41,7 +41,7 @@
          $this -> elements[] = $content;
       }
       
-      public function market ($html){
+      public function markup ($html){
          $this -> elements[] = $html;
       }
       

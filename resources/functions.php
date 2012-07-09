@@ -85,7 +85,7 @@ function getAllTasks($projectId=NULL, $limit=NULL){
 		$t->title = $all['task_title'];
 		$t->notes = $all['notes'];
 		$t->milestone = $all['milestone'];
-		$t->expectedTimeframw = $all['expected_time'];
+		$t->expectedTimeframe = $all['expected_time'];
 		$t->dueDate = $all['due_date'];
 		$t->status = $all['status'];
 		$tasks[] = $t;
@@ -93,9 +93,35 @@ function getAllTasks($projectId=NULL, $limit=NULL){
 	return $tasks;
 }
 
+function getAllTime($projectId=NUll, $limit=NULL){
+	$getAllQuery = "SELECT * FROM time";
+	if(isset($projectId)){
+		$getAllQuery .= " WHERE project_id = $projectId ";
+	}
+	if(isset($limit)){
+		$getAllQuery .= " LIMIT $limit";
+	}
+	$retrieveAll = mysql_query($getAllQuery);
+	$time = array();
+	
+	while($all = mysql_fetch_array($retrieveAll)){
+		$ti = new Time();
+		$ti->id = $all['time_id'];
+		$ti->amount = $all['time_amt'];
+		$ti->start = $all['start_time'];
+		$ti->end = $all['end_time'];
+		$ti->date = $all['the_date'];
+		$ti->task = $all['task_id'];
+		$time[] = $ti;
+	}
+	return $time;
+}
+
 function calcTimeSpent($projectId=NULL){
-	$query = "SELECT SUM(time_amt) AS time_amt FROM time
-				WHERE project_id = $projectId";
+	$query = "SELECT SUM(time_amt) AS time_amt FROM time ";
+	if(isset($projectId)){
+		$query .= " WHERE project_id = $projectId ";
+	}
 	$retrieve = mysql_query($query);
 	$results = mysql_fetch_assoc($retrieve);
 	

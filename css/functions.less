@@ -1,0 +1,65 @@
+
+/* COLORS */
+@light-blue: #f5f5ff;
+@blue: #85a5b7;
+@dark-blue: #333d47;
+@teal: #4ea89c;
+
+@white: #ffffff;
+@gray: #cccccc;
+
+
+.center (@width: 960px){
+	width: @width;
+	margin: 0 auto;
+	display: block;
+}
+
+.link-block{
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.shadow(@color: @gray) {
+	-webkit-box-shadow: 0 2px 5px @color;
+	-moz-box-shadow: 0 2px 5px @color;
+	box-shadow: 0 2px 5px @color;	
+}
+
+.gradient(@color: @blue){
+	background: @color;
+	background: -webkit-linear-gradient(top, lighten(@color, 10%) 0%, darken(@color, 10%) 100%);
+	background: -moz-linear-gradient(top, lighten(@color, 10%) 0%, darken(@color, 10%) 100%);
+	background: -o-linear-gradient(top, lighten(@color, 10%) 0%, darken(@color, 10%) 100%);
+	background: -linear-gradient(top, lighten(@color, 10%) 0%, darken(@color, 10%) 100%);
+}
+
+.reverse-gradient(@color: @blue){
+	background: darken(@color, 15%);
+	background: -webkit-linear-gradient(top, darken(@color, 10%) 0%, lighten(@color, 10%) 100%);
+	background: -moz-linear-gradient(top, darkent(@color, 10%) 0%, lighten(@color, 10%) 100%);
+	background: -o-linear-gradient(top, darken(@color, 10%) 0%, lighten(@color, 10%) 100%);
+	background: -linear-gradient(top, darken(@color, 10%) 0%, lighten(@color, 10%) 100%);		  
+}
+
+.rounded(@radius: 5px){
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+}
+
+.fl{
+   float:left;
+}
+
+.fr{
+   float:right;
+}
+
+.module{
+	.shadow(lighten(@gray, 10%));
+	background: @white;
+	padding: 15px;
+	margin: 15px;
+}
