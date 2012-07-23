@@ -5,10 +5,15 @@
       public $elements = array();
       
       public function textField($name, $required=false, $value="", $error="") {
-         $content = "<input type='text' name=$name id=$name value=$value >";
+         $content = "<input type='text' name=$name id=$name value=$value > ";
          $content .= "<span class='error'>$error</span>";
          $this -> elements[] = $content;
       }
+		
+		public function textArea($name, $cols = 20, $rows = 2){
+			$content = "<textarea name=$name id=$name cols='$cols' rows='$rows'></textarea> ";
+			$this -> elements[] = $content;
+		}
       
       public function dropDown($name, $options = array(), $selected=array(), $multiple=false){
          //Options is assoc id => val
@@ -27,7 +32,7 @@
             }
             $content .= ">$value</option>";
          }
-			$content .= "</select>";
+			$content .= "</select> ";
          $this -> elements[] = $content;
       }
       
@@ -37,7 +42,7 @@
       }
       
       public function label ($for, $label){
-         $content = "<label for=$for>$label</label>";
+         $content = "<label for=$for>$label</label> ";
          $this -> elements[] = $content;
       }
       
@@ -51,7 +56,7 @@
             $form .= $el;
          }
          $form .= "<input type='submit' value=$submitValue >";
-         $form .= "</form>";
+         $form .= "</form> ";
          echo $form;
          //return $form;
       }

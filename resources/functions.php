@@ -79,7 +79,7 @@ function getAllTasks($projectId=NULL, $limit=NULL){
 	$retrieveAll = mysql_query($getAllQuery);
 	$tasks = array();
 	
-	while($all = mysql_fetch_array($retrieveAll)){
+	while($all = mysql_fetch_assoc($retrieveAll)){
 		$t = new Task();
 		$t->id = $all['task_id'];
 		$t->title = $all['task_title'];
@@ -117,6 +117,56 @@ function getAllTime($projectId=NUll, $limit=NULL){
 	return $time;
 }
 
+function getAllIncome($projectId = NULL, $filter = NULL, $limit = NULL ){
+	$getAllQuery1 = "SELECT income_id AS id, income_amt AS 'amt', description AS 'desc', date, project_id FROM income ";
+	$getAllQuery2 = "SELECT expense_id, expense_amt, expense_title, date, project_id FROM expenses ";
+	
+	if(isset($projectId)){
+		$getAllQuery1 .= " WHERE project_id = $projectId ";	
+		$getAllQuery2 .= " WHERE project_id = $projectId ";
+	}
+	if(isset($filter)){
+		$getAllQuery1 .= $filter;
+		$getAllQuery2 .= $filter;
+	}
+	
+	$query = $getAllQuery1 . " UNION " . $getAllQuery2;
+	
+	if(isset($limit)){
+		$query .= " LIMIT $limit";
+	}
+
+	$retrieveAll = mysql_query($query);
+	$income = array();
+	
+	while($all = mysql_fetch_array($retrieveAll)){
+		$i = new Income();
+		$i->id = $all['id'];
+		$i->amount = $all['amt'];
+		$i->description = $all['desc'];
+		$i->date = $all['date'];
+		$income[] = $i;
+	}
+	return $income;
+}
+
+function getTimeForTask($taskId){
+	$timeQuery = "SELECT time_amt, the_date FROM time
+					  WHERE task_id = $taskId";
+	$retrieveTime = mysql_query($timeQuery);
+	
+	$timeForTasks = null;
+	
+	if($retrieveTime){
+		while($row = mysql_fetch_array($retrieveTime)){
+			$timeForTasks[] = array('time' => $row['time_amt'],
+											'date' => $row['the_date']);
+		}
+	}
+	
+	return $timeForTasks;
+}
+
 function calcTimeSpent($projectId=NULL){
 	$query = "SELECT SUM(time_amt) AS time_amt FROM time ";
 	if(isset($projectId)){
@@ -125,8 +175,43 @@ function calcTimeSpent($projectId=NULL){
 	$retrieve = mysql_query($query);
 	$results = mysql_fetch_assoc($retrieve);
 	
-	$time = $results['time_amt'];
-	return isset($time) ? $time : "00:00:00";
+	$time['hrs'] = $results['time_amt']/60;
+	$time['formatted'] = formatTimeFromMin($results['time_amt']);
+	return isset($time) ? $time : "00:00";
+}
+
+function calcTimeForTask($timeArray){
+	$total = 0;
+	foreach($timeArray as $time){
+		$total += strtotime($time['time']);
+	}
+	return $total;
+}
+
+function calcIncomeTotal($projectId = NULL){
+	$query = "SELECT SUM(income_amt) FROM income WHERE project_id = $projectId
+				 UNION
+				 SELECT SUM(expense_amt) FROM expenses WHERE project_id = $projectId";
+	$retrieve = mysql_query($query);
+	//Query should return two rows);
+	$income = 0;
+	while( $row = mysql_fetch_array($retrieve)){
+		$income += $row[0];
+	}
+	return $income;
+}
+
+function formatTimeFromMin($totalTime = 0){
+	$h = floor($totalTime/60);
+	if($h < 10) $h = '0' . $h;
+	$m = $totalTime % 60;
+	if($m < 10) $m = '0' . $m;
+	return $h . "h " . $m . "m";
+}
+
+function getMinFromDuration($duration){
+	/// $duration = [HH][MM];
+	return ($duration[0] * 60) +  $duration[1];
 }
 
 function spamcheck($field){
@@ -144,5 +229,46 @@ function ifIsset(&$var, $default = NULL) {
 	return $s;
 	#isset($var) ? $var : $default;
 }
+
+function timeSelectFormatter () {
+	$timeFormat = array();
+	for($i=0; $i<60; $i++){
+		if($i<10){
+			$timeFormat['hour'][] = "0" . $i;
+			$timeFormat['min'][] = "0" . $i;
+		}else if($i<13){
+			$timeFormat['hour'][] = $i;
+			$timeFormat['min'][] = $i;
+		}else{
+			$timeFormat['min'][] = $i;
+		}
+	}
+	$timeFormat['ap'] = array("AM", "PM");
+	return $timeFormat;
+}
+
+function formatTime($hrMinAM = array()){
+	// Converts the array of times and formatts
+	// them to be in 24 hour time 12:00:00
+	$formattedTime = NULL;
+	if( count($hrMinAM) == 3 ){
+		if( $hrMinAM[2] == 1){
+			$hrMinAM[0] += 12;
+		}
+		
+		if($hrMinAM[0] < 10){
+			$hrMinAM[0] = "0" . $hrMinAM[0];
+		}
+	
+		if($hrMinAM[1] < 10){
+			$hrMinAM[1] = "0" . $hrMinAM[1];
+		}
+		
+		$formattedTime = $hrMinAM[0] . ":" . $hrMinAM[1] . ":00";
+	}
+	
+	return $formattedTime;
+}
+
 
 ?>

@@ -24,12 +24,14 @@ class FormValidation extends Form{
       //Validates and elements based on format regex
       $valid = false;
       #$regex = filter_var($format, FILTER_VALIDATE_REGEXP);
-
-      if(preg_match($format, $element)) $valid = true;
-
-      if(!$valid) $this->errors[$element] = "Incorrect Format"; 
-
-      $this->validations[] = $valid;
+		if(!empty($element)){
+			if(preg_match($format, $element)) $valid = true;
+		}else{
+			// If it is not a required field and not set then form is valid
+			$valid = true;
+		}
+		if(!$valid) $this->errors[$element] = "Incorrect Format"; 
+		$this->validations[] = $valid;
       return $valid;
    }
    
@@ -63,7 +65,23 @@ class FormValidation extends Form{
       $this->validations[] = $valid;
       return $valid;
    }
-   
+	
+	public function validateDate($element, $sperator = "/"){
+		$valid = false;
+		$values = explode($sperator, $element);
+		// 05/12/1990 -> checks assuming it's month day year
+		if(count($values) == 3){
+			$check = checkdate($values[0], $values[1], $values[2]);
+			if(!$check){
+				$this->errors[$element] = "Date was not valid";
+			}
+			$valid = $check;
+		}else{
+			$this->errors[$element] = "Date was not valid";
+		}
+		return $valid;
+	}
+	   
    public function validateUniqueness($element){
       //Validates if element matches another   
    }

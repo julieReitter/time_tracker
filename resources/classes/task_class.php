@@ -12,21 +12,31 @@ class Task{
 	public $dueDate = 'today';
 	public $status = 0;
 	
-	private $statusDesc = array( 0 => "To Do", 1 => "In Progres", 2 => "Completed");
-	private $milesontDesc = array(0=> false, 1=> true);
+	//private $statusDesc = array( 0 => "To Do", 1 => "In Progres", 2 => "Completed");
+	//private $milesontDesc = array(0=> false, 1=> true);
 	//=========================
 	// METHODS
 	//=========================
 	
-	public function create(){
+	public function create($title, $notes, $milestone, $expected, $date, $status){
+		$this->title = $title;
+		$this->notes = $notes;
+		$this->expectedTimeframe = $expected;
+		$this->dueDate = $date;
+		$this->status = $status;
+		
+		if($milestone){
+			$this->milestone = 1;
+		}
+		
 		#TODO : fix this to be tasks not time HAHA
-		$newQuery = "INSERT INTO time (time_amt, start_time, end_time, the_date, project_id, task_id)
-					VALUES ('$this->amount', 
-							'$this->start',
-							'$this->end',
-							'$this->date', 
-							'$this->id',
-							'$this->task')";
+		$newQuery = "INSERT INTO tasks (task_title, milestone, expected_time, due_date, status, project_id)
+					VALUES ('$this->title', 
+							'$this->milestone',
+							'$this->expectedTimeframe',
+							'$this->dueDate', 
+							'$this->status'
+							'$currentProject')";
 		mysql_query($newQuery);
 	}
 	

@@ -18,7 +18,7 @@ class Project {
 	public $id = NULL;
 	public $name = "Untitled Project";
 	public $budget = NULL;
-	public $rate = 0.00;
+	public $rate = 0;
 	
 	//Project Client Information - Get client ID
 	public $client = NULL;

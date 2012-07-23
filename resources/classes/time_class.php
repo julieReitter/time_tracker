@@ -31,7 +31,7 @@ class Time {
 							'$project',
 							'$this->task')";
 		mysql_query($newQuery);
-		echo $newQuery;
+
 	}
 	
 	public function read(){

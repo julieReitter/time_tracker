@@ -11,12 +11,12 @@
 		<div class="project module">
 			<div class="header">
 				<h2><?php echo $proj->name; ?></h2>
-				<ul>
-					<li>Play</li>
-					<li>Add</li>
-					<li>Contact Client
-						<ul>
-							<?php echo $proj->client; ?>
+				<ul class="project-menu">
+					<li class="play"><a href="#"></a></li>
+					<li class="add"><a href="#"></a></li>
+					<li class="contact-client"><a href="#"></a>
+						<ul style="display: none">
+							<?php echo "<li>" . $proj->client . "</li>"; ?>
 						</ul>
 					</li>		
 				</ul>
@@ -28,7 +28,14 @@
 					foreach($tasks as $task):
 				?>
 				<li class="task">
-					<span class="date"><?php echo $task->dueDate;?> </span>
+					<span class="date">
+						<span class="month">
+							<?php echo date("M", strtotime($task->dueDate));?>
+						</span>
+						<span class="date">
+							<?php echo date("d", strtotime($task->dueDate));?>
+						</span>
+					</span>
 					<h3><?php echo $task->title; ?></h3>
 					<p><?php echo $task->notes;?></p>
 					<span class="button timer"></span>
@@ -37,22 +44,45 @@
 			</ul>
 			
 			<div class="overview">
-				<span class="time-spent">
+				<div class="time-spent">
 					Time Spent 
-					<h4><?php echo calcTimeSpent($proj->id);?></h4>
-				</span>
-				<span class="income">
+					<h4>
+					<?php
+						$totalTime = calcTimeSpent($proj->id);
+						echo $totalTime['formatted'];
+					?></h4>
+				</div>
+				<div class="income">
 					Income
-					<h4>$300</h4>
-				</span>
+					<h4>
+					<?php
+						$totalIncome = calcIncomeTotal($proj->id);
+						echo "$" . $totalIncome;
+					?></h4>
+				</div>
 			</div>
 			
 			<div class="progress">
+				<?php
+					// Time spent verses entire project timeframe
+					$timeFull = $proj->budget / $proj->rate;
+					if($totalTime['hrs'] < $timeFull){
+						$timeBarWidth = ($totalTime['hrs'] / ($proj->budget / $proj->rate)) * 100;
+					}else{
+						$timeBarWidth = 100;
+					}
+				
+					if($totalIncome < $proj->budget){
+						$budgetBarWidth = ($totalIncome / $proj->budget);
+					}else{
+						$budgetBarWidth = 100;
+					}
+				?>
 				<div class="full-bar">
-					<div class="bar time"></div>
+					<div class="bar time" style="width:<?php echo $timeBarWidth . "%"; ?>"></div>
 				</div>
 				<div class="full-bar">
-					<div class="bar budget"></div>
+					<div class="bar budget" style="width:<?php echo $budgetBarWidth . "%"; ?>"></div>
 				</div>
 			</div>
 			

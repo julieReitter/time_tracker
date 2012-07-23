@@ -16,24 +16,26 @@ class Income{
 	//=========================
 	public $amount = 00.00;
 	public $description = 00.00;
+	public $date = NULL;
 	
 	//=========================
 	// METHODS
 	//=========================
 	
-	public function create(){
+	public function create($amount, $description){
+		$this->amount = $amount;
+		$this->description = $description;
+		
 		if( $this->amount > 0){
 			# Insert Income Amount
-			$newQuery = "INSERT INTO income (income_amt, description, project_id)
-						 VALUES ('$this->amount', 
-								'$this->description', 
-								'$project'";
+			//TODO: edit if project is set
+			$newQuery = "INSERT INTO income (income_amt, description, date, project_id)
+						 VALUES ('$this->amount', '$this->description', '$this->date'," . $_SESSION['project'] . ")";
+		
 		}else if($this->amount < 0){
 			# Insert Expense Amount
-			$newQuery = "INSERT INTO expenses  (expense_amt, expense_title, project_id)
-						 VALUES ('$this->amount', 
-								'$this->description', 
-								'$project'";
+			$newQuery = "INSERT INTO expenses (expense_amt, expense_title, date, project_id)
+						 VALUES ('$this->amount', '$this->description', '$this->date', " . $_SESSION['project'] . ")";
 		}
 		mysql_query($newQuery);
 	}

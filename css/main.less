@@ -4,6 +4,8 @@
 body{
 	background-color: @light-blue;
 	font-family: Arial, sans-serif;	
+	font-size: 100%;
+	color: @dark-blue;
 }
 
 a{
@@ -11,19 +13,32 @@ a{
 	color: @teal;
 }
 
+h2 {
+	text-transform: uppercase;
+	font-size: 130%;
+	color: @dark-blue;
+	font-weight: bold;
+}
 
 header{
+	.shadow;
 	.gradient(@dark-blue);
 	padding: 0 50px;
 	height: 45px;
+	border-top: solid 3px #000;
+	border-bottom: solid 1px #fff;
 	
 	#logo{
 		.fl;
-		color: #fff;
+		background-image: url(../images/layout/logo.png);
+		background-repeat: no-repeat;
+		background-position: 0px 10px;
+		width: 140px;
+		height: 40px;
 	}
 	
-	#app-navigation {
-		li{
+	.button-nav{
+		li {
 			.fl;
 			width: 30px;
 			height: 30px;
@@ -34,10 +49,62 @@ header{
 			line-height: 40px;
 			border: solid 2px @dark-blue;
 			box-shadow: inset 0 2px 3px fade(@white, 10%); 
+		
+			a {
+				.link-block;
+				background-image: url(../images/layout/header_sprites.png);
+				background-repeat: no-repeat;
+			}
+		
+			&:hover{
+				.reverse-gradient(lighten(@dark-blue, 5%));
+			}
+		}
+	}
+	
+	#app-navigation {
+		padding-top: 2px;
+
+		.home {
+			background-position: 5px 2px;
+		}
+	
+		.time {
+			background-position: -30px 1px;
+		}
+		
+		.tasks {
+			background-position: -58px 0px;
+		}
+		
+		.money {
+			background-position: -86px 2px;
+		}
+		
+		.project-select {
+			background: none;
+			border: none;
+			box-shadow: none;
+		}
+	}
+	
+	#general-nav{
+		.play {
+			background-position: -143px 1px;
+		}
+		
+		.settings {
+			background-position: -174px 1px;
+		}
+		
+		.logout {
+			background-position: -203px 1px;
 		}
 		
 	}
+	
 }
+
 
 #content{
 	.center(100%);
@@ -68,6 +135,251 @@ header{
 		
 		h3{
 			text-align: right;
+			text-transform: uppercase;
+			font-size: 12px;
+			color: darken(@gray, 10%);
+		}
+		
+		ul{
+			border-left: solid 2px lighten(@teal, 10%);
+			height: 80px;
 		}
 	}
+}
+
+
+
+/***************************************************
+ *  PROJECT MODULES
+ **************************************************/
+
+.project {
+	.header {
+		h2{
+			.fl;
+		}
+		.project-menu {
+			.fr;
+			
+			li{
+				width: 30px;
+				height: 30px;
+				display: inline-block;
+				margin: 5px;
+				background-color: @teal;
+				.rounded(100px);
+			
+			
+				a {
+					.link-block;
+					background-image: url(../images/layout/project_menu_sprites.png);
+					background-repeat: no-repeat;
+				}
+				
+				&.play a {
+					background-position: 6px 4px;
+				}
+				
+				&.add {
+					background-color: @blue;
+					
+					a {
+						background-position: -16px 4px;
+					}
+					
+				}
+				
+				&.contact-client {
+					background-color: @dark-blue;
+					
+					a {
+						background-position:  -40px 4px;
+					}
+				}
+			}
+		} /* Close Project Menu */
+	}/* close header */
+	
+	.highlights {
+		.fl;
+		clear: both;
+		width: 75%;
+		
+		li {
+			border-bottom: solid 1px lighten(@gray, 5%);
+			padding: 5px 0;
+			min-height: 35px;
+			
+			.date {
+				.fl;
+				width: 60px;
+				display: ;
+			}
+			
+			h3{
+				display: inline-block;
+				vertical-align: top;
+				color: @teal;
+				text-transform: uppercase;
+				font-weight: bold;
+			}
+		}
+	} /* close highlights */
+	
+	.overview {
+		.fr;
+		padding-right: 5%;
+		text-align: center;
+		text-transform: uppercase;
+		
+		h4{
+			font-size: 130%;
+			font-weight: bold;
+		}
+		
+		.time-spent {
+			margin: 30px 0;
+		}
+	}
+	
+	.progress{
+		clear: both;
+	}
+	.full-bar{
+		.rounded;
+		.fl;
+		margin-top: 20px;
+		margin-right: 15px;
+		width: 45%;
+		height: 10px;
+		background-color: lighten(@gray, 8%);
+		box-shadow: inset 0 1px 2px @gray;
+	}
+	
+	.bar {
+		.rounded;
+		height: 80%;
+
+		&.time{
+			.gradient(@blue);
+			border:solid 1px darken(@blue, 10%);
+			box-shadow: inset 0 1px 1px lighten(@blue, 20%)
+		}
+		
+		&.budget{
+			.gradient(@teal);
+			border:solid 1px darken(@teal, 10%);
+			box-shadow: inset 0 1px 1px lighten(@teal, 20%)
+		}
+	}
+	
+	
+	
+	
+}
+
+
+/***************************************************
+ *  DATA TABLE STYLES 
+ **************************************************/
+
+.data {
+	.module;
+	width: 650px;
+	position: relative;
+	
+	h3 {
+		color: @teal;
+		font-weight:bold;
+		font-size: 18px;
+	}
+	
+	thead{
+		th{
+			padding: 15px;
+			border-bottom: solid 1px lighten(@gray, 15%);
+		}
+		
+	}
+	
+	td {
+		padding: 10px;
+		border-bottom: solid 1px lighten(@gray, 15%);
+	
+		&.date {
+			width: 10%;
+		}
+		
+		&.amt {
+			width: 30%;
+			
+			.negative {
+				color: @pink;	
+			}
+		}
+		
+		&.warning {
+			color: @pink;
+			font-weight:bold;
+			font-size: 20px;
+			width: 5%;
+			vertical-align: middle;
+		}
+		
+		&.options {
+			.rounded(100px);
+			.shadow(lighten(@gray, 15%));
+			display:inline-block;
+			position: absolute;
+			right: -20px;
+			width: 20px;
+			background: @white;
+			margin-top: 10px;
+			overflow: hidden;
+		}
+		
+		&.milestone {
+			width: 5%;
+		}
+		
+	} /* end td */ 
+} /* end .data table */
+
+/***************************************************
+ *  FORMS
+ **************************************************/
+
+.new-form {
+	.fl;
+	.module;
+	width: 300px;
+		
+	h3{
+		/*TODO : OOCSS fix this to be more global */
+		font-weight: bold;
+		color: @teal;
+		text-transform: uppercase;
+		font-size: 150%;
+		margin-bottom: 20px;
+	}
+	
+	label {
+		display: inline-block;
+		width: 30%;
+		height: 25px;
+		margin-right: 10px;
+		margin-bottom: 15px;
+		vertical-align: top;
+		text-transform: uppercase;
+		color: @dark-blue;
+		font-size: 85%;
+	}
+	
+	input[type="submit"] {
+		display: block;
+	}
+	input[type="text"], textarea{
+		width: 60%;
+	}
+	
 }
