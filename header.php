@@ -70,7 +70,7 @@
 			<ul>
 				<li><a href="#" class="play"></a></li>
 				<li><a href="#" class="settings"></a></li>
-				<li><a href="logout" class="logout"></a></li>
+				<li><a href="logout.php" class="logout"></a></li>
 			</ul>
 		</nav>
 	</header>
