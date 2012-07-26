@@ -17,7 +17,7 @@
       
       public function dropDown($name, $options = array(), $selected=array(), $multiple=false){
          //Options is assoc id => val
-         $content = "<select name=$name ";
+         $content = "<select name=$name id=$name ";
 			if($multiple){
 				$content .= " multiple='multiple'";
 			}

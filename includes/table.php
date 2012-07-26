@@ -4,6 +4,11 @@ function createTable($tableData, $options){
 	#echo "<pre>";
 	#print_r($tableData);
 	#echo "</pre>";
+	
+	if(empty($tableData['row'])){
+		$tableData['row'][0]['empty'] = "No data has been saved";
+	}
+	
 	$colCount = count($tableData['row'][0]) + 1;
 	$headerColCount = count($tableData['header']);
 	$colspan = $colCount - $headerColCount; 
@@ -13,6 +18,7 @@ function createTable($tableData, $options){
 		$html .= "<th colspan='$colspan'> $head </th>";
 	}
 	$html .= "</tr></thead><tbody>";
+
 	foreach ($tableData['row'] as $key=>$value){
 		$html .= "<tr>";
 		foreach($value as $title =>$data){
@@ -24,6 +30,7 @@ function createTable($tableData, $options){
 		}
 		$html .= "</ul></td></tr>";
 	}
+	
 	$html .= "<tbody></table>";
 	
 	return $html;

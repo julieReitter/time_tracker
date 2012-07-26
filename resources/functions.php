@@ -93,7 +93,7 @@ function getAllTasks($projectId=NULL, $limit=NULL){
 	return $tasks;
 }
 
-function getAllTime($projectId=NUll, $limit=NULL){
+function getAllTime($projectId=NULL, $limit=NULL){
 	$getAllQuery = "SELECT * FROM time";
 	if(isset($projectId)){
 		$getAllQuery .= " WHERE project_id = $projectId ";
@@ -114,6 +114,7 @@ function getAllTime($projectId=NUll, $limit=NULL){
 		$ti->task = $all['task_id'];
 		$time[] = $ti;
 	}
+	mysql_free_result($retrieveAll);
 	return $time;
 }
 

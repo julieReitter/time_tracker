@@ -8,6 +8,20 @@
 		header("Location: login.php");	
 	}
 	
+	$currentProject = null;
+	if (isset($_GET['project'])) {
+		$p = $_GET['project'];
+		if($p == "all"){
+			unset($_SESSION['project']);
+			$currentProject = null;
+		}else{
+			$_SESSION['project'] = $_GET['project'];
+			$currentProject = $_SESSION['project'];		
+		}	
+	}else if(isset($_SESSION['project'])){
+		$currentProject = $_SESSION['project'];
+	}
+	
 	require("resources/classes/project_class.php");
 	require("resources/classes/task_class.php");
 	require("resources/classes/time_class.php");
@@ -16,16 +30,6 @@
 	require("resources/classes/form_validation_class.php");
 	
 	$projects = getAllProjects($user);
-	
-	if(isset($_GET['project'])){
-		$_SESSION['project'] = $_GET['project'];
-		$currentProject = $_SESSION['project'];
-	}else if(isset($_SESSION['project'])){
-		$currentProject = $_SESSION['project'];
-	}else{
-		$currentProject = NULL;
-	}
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -40,6 +44,8 @@
 <script src="<?php echo ROOT . "/resources/lib/less-1.3.0.min.js";?>" type="text/javascript"></script>
 <script src="<?php echo ROOT . "/resources/lib/chosen.jquery.min.js";?>" type="text/javascript"></script>
 <!-- Application Scripts-->
+<script src="<?php echo ROOT . "/js/events.js";?>" type="text/javascript"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("select").css("min-width", "60px");
@@ -57,10 +63,12 @@
 				<li><a href="tasks.php" class="tasks"></a></li>
 				<li><a href="income.php" class="money"></a></li>
 				<li class="project-select">
-					<select>
-						<option><a href="#">All Projects</a></option>
+					<select style="width:200px;">
+						<option value="all">All Projects</option>
 						<?php foreach($projects as $proj): ?>
-						<option><a href="#"><?php echo $proj->name; ?></a></option>
+						<option value="<?php echo $proj->id; ?>" <?php if($currentProject == $proj->id) echo "selected='selected'";?>>
+							<?php echo $proj->name; ?>
+						</option>
 						<?php endforeach; ?>
 					</select>
 				</li>
