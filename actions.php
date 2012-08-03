@@ -42,9 +42,9 @@
    }
    
 	function createTime(){
+      global $currentProject;
 		$elements = $_POST['time'];
-		$timeRegEx = "/(\d{2}):(\d{2})/";
-		#$timeRegEx = "^((0?[1-9]|1[012])(:[0-5]\d){0,2}(\ [AP]M))$|^([01]\d|2[0-3])(:[0-5]\d){0,2}$";
+	
 		$valid = new FormValidation();
 		$valid->validateExistence($elements);
 		$valid->completeValidation();
@@ -52,12 +52,11 @@
 		$formattedTimeStart = formatTime($elements['start*']);
 		$formattedTimeEnd = formatTime($elements['end*']);
 		$duration = getMinFromDuration($elements['total*']);
-		$projectId = $_SESSION['project'];
 		
 		if($valid->formIsValid){
 			$t = new Time();
 			$t -> create($duration, $formattedTimeStart ,
-							 $formattedTimeEnd,  date( "Y-m-d", time() ), $projectId, $elements['task']);
+							 $formattedTimeEnd,  date( "Y-m-d", time() ), $currentProject, $elements['task']);
 		}else{
 			global $value, $errors;
 			$value = $elements;
@@ -68,11 +67,9 @@
 	
 	function createTask(){
 		$elements = $_POST['task'];
-		$timeRegEx = "/(\d{2}):(\d{2})/";
 		
 		$valid = new FormValidation();
 		$valid->validateExistence($elements);
-		$valid->validateFormat($elements['expected'], $timeRegEx);
 		$valid->validateDate($elements['due_date'], "/");
 		if(isset($elements['milestone'])){
 			$elements['milestone'] = 1;
@@ -80,13 +77,14 @@
 			$elements['milestone'] = 0;
 		}
 		$valid->completeValidation();
+      
+      $expected = getMinFromDuration($elements['expected']);
 		
 		if($valid->formIsValid){
 			$task = new Task();
 			$task->create($elements['title*'], $elements['notes'],
-							  $elements['milestone'], $elements['expected'],
+							  $elements['milestone'], $expected,
 							  $elements['due_date'], 0);
-			header("Location: tasks.php");
 		}else{
 			global $value, $errors;
 			$value = $elements;
@@ -106,7 +104,7 @@
 	
 		if($valid->formIsValid){
 			$income = new Income();
-			$income->create($elements['amt*'], $elements['desc']);
+			$income->create($elements['amt*'], $elements['desc'], $elements['date*']);
 		}else{
 			global $value, $errors;
 			$value = $elements;

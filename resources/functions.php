@@ -168,10 +168,11 @@ function getTimeForTask($taskId){
 	return $timeForTasks;
 }
 
-function calcTimeSpent($projectId=NULL){
+function calcTimeSpent(){
+   global $currentProject;
 	$query = "SELECT SUM(time_amt) AS time_amt FROM time ";
-	if(isset($projectId)){
-		$query .= " WHERE project_id = $projectId ";
+	if($currentProject != null){
+		$query .= " WHERE project_id = $currentProject ";
 	}
 	$retrieve = mysql_query($query);
 	$results = mysql_fetch_assoc($retrieve);
@@ -250,7 +251,7 @@ function timeSelectFormatter () {
 
 function formatTime($hrMinAM = array()){
 	// Converts the array of times and formatts
-	// them to be in 24 hour time 12:00:00
+	// them to be in 24 hour time 12:00:00 for database
 	$formattedTime = NULL;
 	if( count($hrMinAM) == 3 ){
 		if( $hrMinAM[2] == 1){
@@ -269,6 +270,12 @@ function formatTime($hrMinAM = array()){
 	}
 	
 	return $formattedTime;
+}
+
+function formatDateForDb ($date) {
+   // Converts 05/12/1990 to 1990-05-12
+   $values = explode("/", $date);
+   return $values[2] . "-" . $values[0] . "-" . $values[1];
 }
 
 

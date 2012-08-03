@@ -38,8 +38,9 @@ class Time {
 		
 	}
 	
-	public function destroy(){
-		
+	public function destroy($id){
+		$deleteQuery = "DELETE FROM time WHERE time_id='$id' ";
+      mysql_query($deleteQuery);
 	}
 	
 	public function update(){

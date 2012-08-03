@@ -50,6 +50,12 @@
 	border-radius: @radius;
 }
 
+.border-box {
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box;  
+  box-sizing: border-box;  
+}
+
 .fl{
    float:left;
 }
@@ -62,5 +68,4 @@
 	.shadow(lighten(@gray, 0%));
 	background: @white;
 	padding: 15px;
-	margin: 15px;
 }

@@ -9,7 +9,9 @@
 	$timeData = array();
 	$timeData['header'] = array("Time Spent " . $timeSpent['formatted']);
 	$c = 0;
+   
 	foreach($time as $t){
+      $timeData['id'][$c] = $t->id;
 		$timeData['row'][$c] = array();
 		$timeData['row'][$c]['date'] = "<span class='month'> " . date('M', strtotime($t->date)) . "</span>
 						<span class='date'>" . date('d', strtotime($t->date)) . "</span>";
@@ -36,34 +38,44 @@
 		$c ++;
 	}
 	
-	$timeOptions = array("<a href='#'>&nbsp;X</a>");
-	$taskNames = array(NULL, 1);
-
+	$timeOptions = array("<a href='#' class='delete' name='time'>X</a>");
+   
+	$tasks = getAllTasks($currentProject);
+   $taskNames = array("Choose Task");
+   foreach( $tasks as $task ) {
+      $taskNames[] = $task->title;
+   }
 	//Create Form
 	// TODO: create dropdowns for start/end to control user input
 	$hrsMin = timeSelectFormatter();
 	
+   echo "<section id='content'>";
 	echo "<div class='new-form'><h3>New Time</h3>";
-	$timeForm = new Form();
-	$timeForm->hidden("form_type", "time");
-	$timeForm->label("time[start*][0]", "Start");
-	$timeForm->dropDown("time[start*][0]", $hrsMin['hour']);
-	$timeForm->markup("<span class='colon'> : </span>");
-	$timeForm->dropDown("time[start*][1]", $hrsMin['min']);
-	$timeForm->dropDown("time[start*][2]", $hrsMin['ap']);
-	$timeForm->label("time[end*][0]", "End");
-	$timeForm->dropDown("time[end*][0]", $hrsMin['hour']);
-	$timeForm->markup("<span class='colon'> : </span>");
-	$timeForm->dropDown("time[end*][1]", $hrsMin['min']);
-	$timeForm->dropDown("time[end*][2]", $hrsMin['ap']);
-	$timeForm->label("time[total*]", "Duration");
-	$timeForm->dropDown("time[total*][0]", $hrsMin['min']);
-	$timeForm->markup("<span class='colon'> : </span>");
-	$timeForm->dropDown("time[total*][1]", $hrsMin['min']);
-	$timeForm->markup("<Br/>");
-	$timeForm->label("time[task]", "Task");
-	$timeForm->dropDown("time[task]", $taskNames);
-	$timeForm->drawForm("new-time", "time.php", "Add Time");
+   
+   if($currentProject == null){
+      echo "<h4>Please selected a project to add a time";
+   } else {
+      $timeForm = new Form();
+      $timeForm->hidden("form_type", "time");
+      $timeForm->label("time[start*][0]", "Start");
+      $timeForm->dropDown("time[start*][0]", $hrsMin['hour']);
+      $timeForm->markup("<span class='colon'> : </span>");
+      $timeForm->dropDown("time[start*][1]", $hrsMin['min']);
+      $timeForm->dropDown("time[start*][2]", $hrsMin['ap']);
+      $timeForm->label("time[end*][0]", "End");
+      $timeForm->dropDown("time[end*][0]", $hrsMin['hour']);
+      $timeForm->markup("<span class='colon'> : </span>");
+      $timeForm->dropDown("time[end*][1]", $hrsMin['min']);
+      $timeForm->dropDown("time[end*][2]", $hrsMin['ap']);
+      $timeForm->label("time[total*]", "Duration");
+      $timeForm->dropDown("time[total*][0]", $hrsMin['min']);
+      $timeForm->markup("<span class='colon'> : </span>");
+      $timeForm->dropDown("time[total*][1]", $hrsMin['min']);
+      $timeForm->markup("<Br/>");
+      $timeForm->label("time[task]", "Task");
+      $timeForm->dropDown("time[task]", $taskNames);
+      $timeForm->drawForm("new-time", "time.php", "Add Time");
+   }
 	echo "</div>";
 	
 	if(isset($errors)){
@@ -82,6 +94,6 @@
 	}
 	
 	echo createTable($timeData, $timeOptions);
-	
+	echo "</section>";
 ?>
 

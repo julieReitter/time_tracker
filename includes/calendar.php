@@ -22,7 +22,7 @@
 				<?php
 					$day = getdate(strtotime("$i day"));
 					echo substr($day['weekday'], 0, 3) . ", ";
-					echo substr($day['month'], 0, 4) . " ";
+					echo substr($day['month'], 0, 3) . " ";
 					echo $day['mday'];
 				?>
 			</h3>
@@ -31,8 +31,10 @@
 				//compare dates
 				$monthValue = $day['mon'];
 				if($monthValue < 10) $monthValue = "0$monthValue";
-				$thisDate = $day['year'] . "-" . $monthValue . "-" . $day['mday'];
-				
+            $dayValue = $day['mday'];
+            if($dayValue < 10) $dayValue = "0$dayValue";
+				$thisDate = $day['year'] . "-" . $monthValue . "-" . $dayValue;
+   
 				if(isset($calendarData[$thisDate])){
 					$todaysTasks = $calendarData[$thisDate];
 					foreach($todaysTasks as $key=>$value){

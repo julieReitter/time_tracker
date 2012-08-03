@@ -9,6 +9,7 @@
 	$c = 0; //Counter
 	
 	foreach($income as $i){
+      $incomeData['id'][$c] = $i->id;
 		$incomeData['row'][$c]['date'] = "<span class='month'> " . date('M', strtotime($i->date)) . "</span>
 						<span class='date'>" . date('d', strtotime($i->date)) . "</span>";
 		if($i->amount > 0){
@@ -22,26 +23,32 @@
 		$c ++;
 	}
 	
-	$incomeOptions = array("Add to invoice", "delete");
+	$incomeOptions = array("+", "<a href='#' class='delete' name='income'>X</a>");
 	
 	//Create Money Add Form
+   echo "<section id='content'>";
 	echo "<div class='new-form'><h3>New Income/Expense</h3>";
-	$moneyForm = new Form();
-	$moneyForm->hidden("form_type", "income");
-	$moneyForm->label("income[date*]", "Date");
-	$moneyForm->textField("income[date*]");
-	$moneyForm->label("income[amt*]", "Amount $");
-	$moneyForm->markup("<span class='expense-notice'></span>");
-	$moneyForm->textField("income[amt*]");
-	$moneyForm->label("income[desc]", "Description");
-	$moneyForm->textArea("income[desc]");
-	$moneyForm->drawForm("new-income", "income.php", "Add&nbsp;Income");
-	echo "</div>"; //Closes new-form;
+	
+   if($currentProject == null){
+      echo "<h4>Please selected a project to add an income or expense";
+   } else {
+      $moneyForm = new Form();
+      $moneyForm->hidden("form_type", "income");
+      $moneyForm->label("income[date*]", "Date");
+      $moneyForm->textField("income[date*]");
+      $moneyForm->label("income[amt*]", "Amount $");
+      $moneyForm->markup("<span class='expense-notice'></span>");
+      $moneyForm->textField("income[amt*]");
+      $moneyForm->label("income[desc]", "Description");
+      $moneyForm->textArea("income[desc]");
+      $moneyForm->drawForm("new-income", "income.php", "Add&nbsp;Income");
+   }
+   echo "</div>"; //Closes new-form;
 
 	if(isset($errors)){
 		echo print_r($errors);
 	}
 	
 	echo createTable($incomeData, $incomeOptions);
-	
+	echo "</section>";
 ?>

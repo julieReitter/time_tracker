@@ -12,7 +12,7 @@
 			<div class="header">
 				<h2><?php echo $proj->name; ?></h2>
 				<ul class="project-menu">
-					<li class="play"><a href="#"></a></li>
+					<li class="play"><a href="#" name="<?php echo $proj->id;?>"></a></li>
 					<li class="add"><a href="#"></a></li>
 					<li class="contact-client"><a href="#"></a>
 						<ul style="display: none">

@@ -20,12 +20,20 @@ function createTable($tableData, $options){
 	$html .= "</tr></thead><tbody>";
 
 	foreach ($tableData['row'] as $key=>$value){
-		$html .= "<tr>";
+      if( isset($tableData['id'])){
+         $html .= "<tr id='" . $tableData['id'][$key] ."'>";
+      }else{
+         $html .= "<tr>";
+      }
+      
 		foreach($value as $title =>$data){
 			$html .= "<td class='$title'>" . $data . "</td>";
 		}
 		$html .= "<td class='options'><ul>";
-		foreach($options as $opt){
+      $html .= "<li class='main'>></li>";
+		
+      // Row Options Setup -- Need ID
+      foreach($options as $opt){
 			$html .= "<li>". $opt . "</li>";
 		}
 		$html .= "</ul></td></tr>";

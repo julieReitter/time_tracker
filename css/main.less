@@ -98,9 +98,14 @@ header{
 		}
 	}
 	
-	#general-nav{
+	#general-nav {
+      
+      li:first-child {
+         .gradient(@teal);   
+      }
+      
 		.play {
-			background-position: -143px 1px;
+         background-position: -143px 1px;
 		}
 		
 		.settings {
@@ -115,17 +120,17 @@ header{
 	
 }
 
-
 #content{
-	.center(100%);
 	margin-top: 20px;
+   padding: 0 50px;
+   min-width: 1024px;
 }
 
 .project{
 	.fl;
 	min-width: 400px;
 	width: 45%;
-	margin-left: 30px !important;
+	margin: 0 20px 20px 0;
 	height: 215px;
 }
 
@@ -134,25 +139,36 @@ header{
 	text-align: center;
 }
 
-#calendar {
-	margin-left: 30px;
+.timing {
+   .gradient(@pink) !important;
+}
 
+#calendar {
+   
 	.day{
 		.fl;
 		min-width: 100px;
 		width: 10%;
 		height: 95px;
+      margin: 5px 15px 20px 0;
+      font-size: 12px;
+		color: darken(@gray, 10%);
+      text-transform: uppercase;
 		
 		h3{
 			text-align: right;
-			text-transform: uppercase;
-			font-size: 12px;
-			color: darken(@gray, 10%);
 		}
 		
 		ul{
 			border-left: solid 2px lighten(@teal, 10%);
 			height: 80px;
+         margin-top: 5px;
+         
+         li {
+            margin-left: 5px;
+            font-weight: bold;
+            text-overflow: ellipse;
+         }
 		}
 	}
 }
@@ -295,7 +311,7 @@ header{
 
 .data {
 	.module;
-	width: 650px;
+	width: 65%;
 	position: relative;
 	
 	h3 {
@@ -337,16 +353,32 @@ header{
 		}
 		
 		&.options {
-			.rounded(100px);
-			.shadow(lighten(@gray, 15%));
-			display:inline-block;
+         display:inline-block;
 			position: absolute;
 			right: -20px;
-			width: 20px;
-			background: @white;
 			margin-top: 10px;
 			overflow: hidden;
-		}
+         border-bottom: none;
+         
+        ul {
+          /*display: none;*/
+			
+          li {
+            .rounded(100px);
+			   .shadow(lighten(@gray, 15%));
+            .border-box;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: @white;
+            padding: 6px 10px;
+          }
+          
+          .main {
+            cursor: pointer;
+          }
+        }
+      }
 		
 		&.milestone {
 			width: 5%;
@@ -363,7 +395,8 @@ header{
 	.fl;
 	.module;
 	width: 300px;
-		
+	margin-right: 25px;
+   	
 	h3{
 		/*TODO : OOCSS fix this to be more global */
 		font-weight: bold;

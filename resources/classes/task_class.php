@@ -22,20 +22,22 @@ class Task{
 		$this->title = $title;
 		$this->notes = $notes;
 		$this->expectedTimeframe = $expected;
-		$this->dueDate = $date;
+		$this->dueDate = formatDateForDb($date);
 		$this->status = $status;
+      global $currentProject;
 		
 		if($milestone){
 			$this->milestone = 1;
 		}
 		
 		#TODO : fix this to be tasks not time HAHA
-		$newQuery = "INSERT INTO tasks (task_title, milestone, expected_time, due_date, status, project_id)
+		$newQuery = "INSERT INTO tasks (task_title, notes, milestone, expected_time, due_date, status, project_id)
 					VALUES ('$this->title', 
+                     '$this->notes', 
 							'$this->milestone',
 							'$this->expectedTimeframe',
 							'$this->dueDate', 
-							'$this->status'
+							'$this->status', 
 							'$currentProject')";
 		mysql_query($newQuery);
 	}
@@ -66,8 +68,9 @@ class Task{
 		$this->status = $obj['status'];
 	}
 	
-	public function destroy(){
-		
+	public function destroy($id){
+		$deleteQuery = "DELETE FROM tasks WHERE task_id = $id ";
+      mysql_query($deleteQuery);
 	}
 	
 	public function update(){

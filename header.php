@@ -43,6 +43,7 @@
 <script src="<?php echo ROOT . "/resources/lib/jquery-1.7.2.min.js";?>" type="text/javascript"></script>
 <script src="<?php echo ROOT . "/resources/lib/less-1.3.0.min.js";?>" type="text/javascript"></script>
 <script src="<?php echo ROOT . "/resources/lib/chosen.jquery.min.js";?>" type="text/javascript"></script>
+<script src="<?php echo ROOT . "/resources/lib/jquery.cookie.js";?>" type="text/javascript"></script>
 <!-- Application Scripts-->
 <script src="<?php echo ROOT . "/js/events.js";?>" type="text/javascript"></script>
 
