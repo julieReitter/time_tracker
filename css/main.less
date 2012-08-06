@@ -188,40 +188,62 @@ header{
 			.fr;
 			
 			li{
+            .rounded(100px);
 				width: 30px;
 				height: 30px;
 				display: inline-block;
 				margin: 5px;
 				background-color: @teal;
-				.rounded(100px);
-			
-			
-				a {
-					.link-block;
-					background-image: url(../images/layout/project_menu_sprites.png);
-					background-repeat: no-repeat;
-				}
-				
-				&.play a {
-					background-position: 6px 4px;
+            background-image: url(../images/layout/project_menu_sprites.png);
+				background-repeat: no-repeat;
+         							
+				&.play {
+               cursor: pointer;
+               background-position: 6px 4px;
+               a{
+                  .link-block;
+               }
 				}
 				
 				&.add {
 					background-color: @blue;
-					
-					a {
-						background-position: -16px 4px;
-					}
-					
+					background-position: -16px 4px;				
 				}
 				
 				&.contact-client {
 					background-color: @dark-blue;
-					
-					a {
-						background-position:  -40px 4px;
-					}
+					background-position:  -40px 4px;
 				}
+            
+            ul {
+               .rounded(10px);
+               .shadow;
+               position: absolute;
+               min-width: 150px;
+               margin-top: 30px;
+               padding: 5px;
+               background: @white;
+            
+               li {
+                  display: block;
+                  height: auto;
+                  width: 115px;
+                  background: @white; 
+                  font-size: 14px;
+                  padding: 5px 15px;
+               }
+          
+               li:hover {
+                 .rounded(20px);
+                 background: @blue;
+            
+                  a {
+                     .link-block;
+                     color: @white;
+                     background-image: none;
+                  }
+               }
+            }
 			}
 		} /* Close Project Menu */
 	}/* close header */
@@ -317,8 +339,12 @@ header{
 	h3 {
 		color: @teal;
 		font-weight:bold;
-		font-size: 18px;
+		font-size: 18px;      
 	}
+   
+   .overdue {
+      color: @pink !important;
+   }
 	
 	thead{
 		th{
@@ -353,37 +379,41 @@ header{
 		}
 		
 		&.options {
-         display:inline-block;
-			position: absolute;
-			right: -20px;
-			margin-top: 10px;
-			overflow: hidden;
-         border-bottom: none;
+         width: 20px;
          
         ul {
-          /*display: none;*/
-			
+          .rounded(10px);
+          .shadow;
+          position: absolute;
+          right: -100px;
+          width: 150px;
+          padding: 5px;
+          background: @white;
+          
+          
           li {
-            .rounded(100px);
-			   .shadow(lighten(@gray, 15%));
-            .border-box;
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            background: @white;
-            padding: 6px 10px;
+           display: block;            
+           background: @white; 
+           font-size: 14px;
+           padding: 5px 15px;
           }
           
-          .main {
-            cursor: pointer;
+          li:hover {
+            .rounded(20px);
+            background: @blue;
+            
+            a {
+               color: @white;
+            }
+            
           }
+          
         }
       }
 		
 		&.milestone {
 			width: 5%;
-		}
-		
+		}		
 	} /* end td */ 
 } /* end .data table */
 
@@ -425,4 +455,8 @@ header{
 		width: 60%;
 	}
 	
+}
+
+div.ui-datepicker{
+ font-size:14px !important;
 }

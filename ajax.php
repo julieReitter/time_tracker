@@ -23,6 +23,15 @@
                    date( "Y-m-d", time() ), $project, $task);
 
    }
+   
+   if( isset($_POST['completeTask']) && $_POST['completeTask'] == 'complete-task'){
+      $id = $_POST['id'];
+      $date = date("Y/m/d");
+      echo $date;
+      
+      $task = new Task();
+      $task -> update($id, " status='1' , date_completed='$date' ");     
+   }
 
 
 ?>

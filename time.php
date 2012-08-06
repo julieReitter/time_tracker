@@ -5,7 +5,7 @@
 	
 	//Format data to create table
 	$time = getAllTime($currentProject);
-	$timeSpent = calcTimeSpent();
+	$timeSpent = calcTimeSpent($currentProject);
 	$timeData = array();
 	$timeData['header'] = array("Time Spent " . $timeSpent['formatted']);
 	$c = 0;
@@ -38,12 +38,12 @@
 		$c ++;
 	}
 	
-	$timeOptions = array("<a href='#' class='delete' name='time'>X</a>");
+	$timeOptions = array("<a href='#' class='delete' name='time'>Delete</a>");
    
 	$tasks = getAllTasks($currentProject);
    $taskNames = array("Choose Task");
    foreach( $tasks as $task ) {
-      $taskNames[] = $task->title;
+      $taskNames[$task->id] = $task->title;
    }
 	//Create Form
 	// TODO: create dropdowns for start/end to control user input
@@ -77,6 +77,8 @@
       $timeForm->drawForm("new-time", "time.php", "Add Time");
    }
 	echo "</div>";
+   
+   echo date("Y-m-d", time());
 	
 	if(isset($errors)){
 		echo print_r($errors);

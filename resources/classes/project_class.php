@@ -19,6 +19,7 @@ class Project {
 	public $name = "Untitled Project";
 	public $budget = NULL;
 	public $rate = 0;
+   public $endDate = NULL;
 	
 	//Project Client Information - Get client ID
 	public $client = NULL;
@@ -31,14 +32,24 @@ class Project {
 	//=========================
 	// METHODS
 	//=========================		
-	public function create($name, $budget, $rate, $client){
+	public function create($name, $budget, $rate, $client, $endDate){
+      global $user;
 		$this->name = $name;
 		$this->budget = $budget;
 		$this->rate = $rate;
 		$this->client = $client;
-		
-		$newQuery = "INSERT INTO projects (project_name, client_id, hr_rate, project_budget, user_id)
-					VALUES ('$this->name', '$this->client', '$this->rate', '$this->budget', '$user')";
+      if($endDate != ""){
+         $this->endDate = formatDateForDb($endDate);
+      }
+      
+		$newQuery = "INSERT INTO projects (project_name, client_id, hr_rate, project_budget, user_id, end_date)
+					VALUES ('$this->name', '$this->client', '$this->rate', '$this->budget', '$user' ";
+      if($this->endDate == NULL) {
+         $newQuery .= " , NULL );";
+      } else {
+         $newQuery .= " , '$this->endDate' );";
+      }
+      echo $newQuery;
 		mysql_query($newQuery);
 	}
 	
@@ -59,8 +70,17 @@ class Project {
 		$this->client = $obj.client_id;
 	}
 	
-	public function destroy(){
-		
+	public function destroy($id){
+		$queryE = "DELETE FROM expenses WHERE project_id=$id ";
+      $queryI = "DELETE FROM income WHERE project_id=$id ";
+      $queryTa = "DELETE FROM tasks WHERE project_id=$id ";
+      $queryT = "DELETE FROM time WHERE project_id=$id ";
+      $queryP = "DELETE FROM projects WHERE project_id=$id ";
+      mysql_query($queryE);
+      mysql_query($queryI);
+      mysql_query($queryTa);
+      mysql_query($queryT);
+      mysql_query($queryP);
 	}
 	
 	public function update(){

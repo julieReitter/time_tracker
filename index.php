@@ -13,12 +13,25 @@
 				<h2><?php echo $proj->name; ?></h2>
 				<ul class="project-menu">
 					<li class="play"><a href="#" name="<?php echo $proj->id;?>"></a></li>
-					<li class="add"><a href="#"></a></li>
-					<li class="contact-client"><a href="#"></a>
-						<ul style="display: none">
-							<?php echo "<li>" . $proj->client . "</li>"; ?>
+					<li class="add">
+                  <ul style="display: none">
+                     <li><a href="tasks.php?project=<?php echo $proj->id; ?>">Task</a></li>
+                     <li><a href="time.php?project=<?php echo $proj->id; ?>">Time</a></li>
+                     <li><a href="income.php?project=<?php echo $proj->id; ?>">Income</a></li>
+                  </ul>   
+               </li>
+               <?php if ($proj->client != 0): ?>
+					<li class="contact-client">
+                  <ul style="display: none">
+                  <?php
+                     $client = getClientById($proj->client);
+                     echo "<li>" . $client['client_name'] . "</li>" .
+                          "<li>" . $client['client_email'] . "</li>" . 
+                          "<li>" . $client['client_phone'] . "</li>";
+                  ?>
 						</ul>
-					</li>		
+					</li>
+               <?php endif; ?>
 				</ul>
 			</div>
 			

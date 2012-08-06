@@ -4,11 +4,13 @@ $(document).ready(function () {
 	//CALLS
 	$(".project-select select").chosen().change(changeProject);
 	$("#new-time select").change(updateDuration);
-   
-   $(".options").on("click", ".delete", deleteRecord);
-	
+   	
    $("#general-nav").on("click", ".play", generalTimer);
    $(".project-menu .play").on("click", "a", generalTimer)
+   
+   $("input[name='task[due_date]']").datepicker();
+   $("input[name='income[date*]']").datepicker();
+   $("input[name='project[end-date]']").datepicker();
    
    if($.cookie("start") != null){
       $("#general-nav .play").parent().addClass("timing");
@@ -58,62 +60,12 @@ $(document).ready(function () {
          $form.find("select[name^=time]").trigger("liszt:updated");
       }
 	}
-	
-	function deleteRecord(event){
-		var $this = $(this),
-          $parentRow = $this.closest("tr"),
-          id = $parentRow.attr("id"),
-          datatype = $this.attr("name");
-      
-      event.preventDefault();
-      commit = confirm ("Are you sure you want to delete this record? ");
-      
-      // Tests to see if income row is income or expense
-      if(datatype == "income"){
-         expense = $parentRow.find(".amt h3").hasClass("negative");
-         if(expense){
-            datatype="expense";
-         }
-      }
-      
-      if(commit){
-         $.ajax ({
-            url: "delete.php",
-            type: "POST",
-            data: {"delete-id" : id, "datatype" : datatype },
-            success: function(){
-               $this.closest("tr").remove();
-            },
-            error: function(){
-               alert("Unabled to delete the row");
-            }
-         });
-      }
-     
-	}
-   
-   // Options Effects
-   $(".options li:not(.main)").hide();
-   $(".options").hover(showOptions, hideOptions);
-   
-   function showOptions(event) {
-      $(this).find("li:not(.main)").show();
-   }
-	
-   function hideOptions(event) { 
-      $(this).find("li:not(.main)").hide();
-   }
-   
    
    // Main Timer Setup
    // TODO: make reusable for other timers
    function generalTimer(event) {
       var $this = $(this),
           currentDate = new Date();
-      
-      if($this.attr("name") != undefined){
-         currentProject = $this.attr("name");
-      }
    
       event.preventDefault();
       console.log(currentDate);
@@ -125,6 +77,9 @@ $(document).ready(function () {
          $this.parent().removeClass("timing"); // Remove timing class
       }else {         
          $.cookie("start", currentDate , {expires: 7});
+         if($this.attr("name") != undefined){
+            currentProject = $this.attr("name");
+         }
          $this.parent().addClass("timing");
       }
    }

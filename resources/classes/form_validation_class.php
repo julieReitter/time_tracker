@@ -38,11 +38,11 @@ class FormValidation extends Form{
    public function validateEmail($emailElement){
       //Validates email format
       $valid = false;
-      $field=filter_var($field, FILTER_SANITIZE_EMAIL);
-      if(filter_var($field, FILTER_VALIDATE_EMAIL)){
+      $field = filter_var($emailElement, FILTER_SANITIZE_EMAIL);
+      if(filter_var($emailElement, FILTER_VALIDATE_EMAIL)){
          $valid = true;
       }
-      #$this->$errors['email'] = "Invalid Email";
+      $this->errors['email'] = "Invalid Email";
       $this->validations[] = $valid;
       return $valid;
    }

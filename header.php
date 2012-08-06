@@ -38,14 +38,17 @@
 <title>Daily Grind | Time Tracking &amp Project Managment</title>
 <!-- Styles -->
 <link rel="stylesheet" type="text/css" href="<?php echo ROOT . "/resources/lib/chosen.css";?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo ROOT . "/resources/lib/jquery.datepicker.ui.min.css";?>" />
 <link rel="stylesheet/less" type="text/css" href="<?php echo ROOT . "/css/main.less";?>"/>
 <!-- Third Party Scripts-->
 <script src="<?php echo ROOT . "/resources/lib/jquery-1.7.2.min.js";?>" type="text/javascript"></script>
 <script src="<?php echo ROOT . "/resources/lib/less-1.3.0.min.js";?>" type="text/javascript"></script>
 <script src="<?php echo ROOT . "/resources/lib/chosen.jquery.min.js";?>" type="text/javascript"></script>
 <script src="<?php echo ROOT . "/resources/lib/jquery.cookie.js";?>" type="text/javascript"></script>
+<script src="<?php echo ROOT . "/resources/lib/jquery.datepicker.ui.min.js";?>" type="text/javascript"></script>
 <!-- Application Scripts-->
 <script src="<?php echo ROOT . "/js/events.js";?>" type="text/javascript"></script>
+<script src="<?php echo ROOT . "/js/options.js";?>" type="text/javascript"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -78,7 +81,7 @@
 		<nav id="general-nav" class="button-nav fr">
 			<ul>
 				<li><a href="#" class="play"></a></li>
-				<li><a href="#" class="settings"></a></li>
+				<li><a href="settings.php" class="settings"></a></li>
 				<li><a href="logout.php" class="logout"></a></li>
 			</ul>
 		</nav>

@@ -9,7 +9,7 @@ function createTable($tableData, $options){
 		$tableData['row'][0]['empty'] = "No data has been saved";
 	}
 	
-	$colCount = count($tableData['row'][0]) + 1;
+	$colCount = count($tableData['row'][0]) + 2;
 	$headerColCount = count($tableData['header']);
 	$colspan = $colCount - $headerColCount; 
 	
@@ -29,8 +29,7 @@ function createTable($tableData, $options){
 		foreach($value as $title =>$data){
 			$html .= "<td class='$title'>" . $data . "</td>";
 		}
-		$html .= "<td class='options'><ul>";
-      $html .= "<li class='main'>></li>";
+		$html .= "<td class='options'><a href='#' class='opt-icon'>o</a><ul>";
 		
       // Row Options Setup -- Need ID
       foreach($options as $opt){
@@ -43,5 +42,25 @@ function createTable($tableData, $options){
 	
 	return $html;
 }
+?> 
 
-?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

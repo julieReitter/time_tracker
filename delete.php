@@ -10,24 +10,27 @@
       $dataType = $_POST['datatype'];
       
       switch($dataType){
-        case 'project':
-           deleteProject($deleteId);
-           break;
-        case "task":
-           deleteTask($deleteId);
-           break;
-        case "time":
-           deleteTime($deleteId);
-           break;
-        case "income":
-           deleteIncome($deleteId, "income");
-           break;
-        case "expense":
-           deleteIncome($deleteId, "expense");
-           break;
-        default:
-           echo "ERROR DELETEING RECORD ";
-           break;
+			case 'project':
+				deleteProject($deleteId);
+				break;
+			case "task":
+				deleteTask($deleteId);
+				break;
+			case "time":
+				deleteTime($deleteId);
+				break;
+			case "income":
+				deleteIncome($deleteId, "income");
+				break;
+			case "expense":
+				deleteIncome($deleteId, "expense");
+				break;
+			case "client":
+            deleteClient($deleteId, "client");
+            break;
+			default:
+				echo "ERROR DELETEING RECORD ";
+				break;
       }     
    }
    
@@ -50,4 +53,10 @@
       $income = new Income();
       $income->destroy($id, $type);
    }
+	
+	function deleteClient($id){
+		$query = "DELETE FROM clients WHERE client_id = $id";
+      echo $query;
+      mysql_query($query);
+	}
 ?>

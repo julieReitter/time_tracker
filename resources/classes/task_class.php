@@ -9,7 +9,7 @@ class Task{
 	public $notes = "";
 	public $milestone = 0;
 	public $expectedTimeframe = 0;
-	public $dueDate = 'today';
+	public $dueDate = NULL;
 	public $status = 0;
 	
 	//private $statusDesc = array( 0 => "To Do", 1 => "In Progres", 2 => "Completed");
@@ -22,7 +22,9 @@ class Task{
 		$this->title = $title;
 		$this->notes = $notes;
 		$this->expectedTimeframe = $expected;
-		$this->dueDate = formatDateForDb($date);
+		if($date != ""){
+         $this->dueDate = formatDateForDb($date);
+      }
 		$this->status = $status;
       global $currentProject;
 		
@@ -31,14 +33,18 @@ class Task{
 		}
 		
 		#TODO : fix this to be tasks not time HAHA
-		$newQuery = "INSERT INTO tasks (task_title, notes, milestone, expected_time, due_date, status, project_id)
+		$newQuery = "INSERT INTO tasks (task_title, notes, milestone, expected_time, status, project_id, due_date)
 					VALUES ('$this->title', 
                      '$this->notes', 
 							'$this->milestone',
 							'$this->expectedTimeframe',
-							'$this->dueDate', 
 							'$this->status', 
-							'$currentProject')";
+							'$currentProject' ";
+      if( $this->dueDate == NULL) {
+         $newQuery .= " , NULL );";
+      }else {
+         $newQuery .= " , '$this->dueDate' );";
+      }
 		mysql_query($newQuery);
 	}
 	
@@ -73,8 +79,9 @@ class Task{
       mysql_query($deleteQuery);
 	}
 	
-	public function update(){
-		
+	public function update($id, $params){
+      $updateQuery = "UPDATE tasks SET $params WHERE task_id = $id ";
+      mysql_query($updateQuery);
 	}
 }
 ?>

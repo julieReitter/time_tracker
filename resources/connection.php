@@ -5,7 +5,7 @@
 	$db = mysql_select_db("time_tracker", $conn);
 	if(!$db) die ("Could Not Connect To Database");
 	
-	define('ROOT', 'http://localhost/dbproject');
+	define('ROOT', 'http://localhost/databaseproject');
 	// Set a global date constant for time calculations
 	define('GLOBAL_DATE', '1990-05-12 '); 
 ?>

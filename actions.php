@@ -14,6 +14,9 @@
          case "income":
             createIncome();
             break;
+			case "client":
+				createClient();
+				break;
          default:
             echo "error processing form";
             break;
@@ -27,13 +30,17 @@
       $valid->validateExistence($elements);
       $valid->validateNumber($elements['rate'], 'rate');
       $valid->validateNumber($elements['budget*'], 'budget*');
+      if(isset($elements['end-date'])) {
+         $valid->validateDate($elements['end-date']);
+      }
       $valid->completeValidation();
 		
       if($valid->formIsValid){
          $p = new Project();
 			$p->create($elements['name*'], $elements['budget*'],
-                    $elements['rate'], $elements['client']);
-			header("Location: index.php");
+                    $elements['rate'], $elements['client'], $elements['end-date']);
+			print_r($elements['client']);
+         //header("Location: index.php");
       }else{
 			global $value, $errors;
 			$value = $elements;
@@ -70,7 +77,9 @@
 		
 		$valid = new FormValidation();
 		$valid->validateExistence($elements);
-		$valid->validateDate($elements['due_date'], "/");
+      if(isset($elements['due_date'])) {
+         $valid->validateDate($elements['due_date'], "/");
+      }
 		if(isset($elements['milestone'])){
 			$elements['milestone'] = 1;
 		}else{
@@ -111,6 +120,29 @@
 			$errors = $valid->errors;
 		}
 		
+	}
+	
+	function createClient() {
+		global $user;
+		// Validation
+		$elements = $_POST['client'];
+		$valid = new FormValidation();
+		$valid -> validateExistence($elements);
+		$valid -> validateEmail($elements['email*']);
+		$valid -> completeValidation();
+		
+		if ($valid->formIsValid){
+			 $query = "INSERT INTO clients (client_name, client_email, client_phone, user_id)
+						 VALUES ('" . $elements['name*'] . "', '" 
+										. $elements['email*'] . "', '"
+										. $elements['phone'] . "', '"
+										. $user . "')";
+			 mysql_query($query);
+		}else {
+			global $value, $errors;
+			$value = $elements;
+			$errors = $valid->errors;
+		}
 	}
 
 ?>

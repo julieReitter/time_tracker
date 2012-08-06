@@ -66,19 +66,25 @@ function getAllProjects($user){
 	return $projects;
 }
 
-function getAllTasks($projectId=NULL, $limit=NULL){
+function getAllTasks($projectId=NULL, $limit=NULL, $status = 0){
 	//Gets all tasks and returns array of tasks objects
 	$getAllQuery = "SELECT * FROM tasks ";
 	//Limits by project id if set
 	if(isset($projectId)){
-		$getAllQuery .= " WHERE project_id = $projectId ";
-	}
+		$getAllQuery .= " WHERE project_id = $projectId AND status=$status ";
+	}else {
+      $getAllQuery .= " WHERE status=$status ";
+   }
+
+   $getAllQuery .= " ORDER BY due_date ";
+   
 	if(isset($limit)){
-		$getAllQuery .= " LIMIT $limit";
-	}
+		$getAllQuery .= " LIMIT $limit ";
+   }
+   
 	$retrieveAll = mysql_query($getAllQuery);
 	$tasks = array();
-	
+
 	while($all = mysql_fetch_assoc($retrieveAll)){
 		$t = new Task();
 		$t->id = $all['task_id'];
@@ -151,6 +157,23 @@ function getAllIncome($projectId = NULL, $filter = NULL, $limit = NULL ){
 	return $income;
 }
 
+function getAllClients($projectId = NULL, $filter = NULL, $limit = NULL) {
+	global $user;
+	$getAllQuery = "SELECT * FROM clients WHERE user_id = $user";
+	$retrieveAll = mysql_query($getAllQuery);
+	$client = array();
+	$c = 0;
+	
+	while ( $all = mysql_fetch_assoc($retrieveAll) ){
+		$client[$c]['id'] = $all['client_id'];
+      $client[$c]['name'] = $all['client_name'];
+		$client[$c]['email'] = $all['client_email'];
+		$client[$c]['phone'] = $all['client_phone'];
+		$c++;
+	}
+	return $client;	
+}
+
 function getTimeForTask($taskId){
 	$timeQuery = "SELECT time_amt, the_date FROM time
 					  WHERE task_id = $taskId";
@@ -168,11 +191,17 @@ function getTimeForTask($taskId){
 	return $timeForTasks;
 }
 
-function calcTimeSpent(){
-   global $currentProject;
+function getClientById($id) {
+   $clientQuery = "SELECT * FROM clients WHERE client_id = $id";
+   $retrieveClient = mysql_query($clientQuery);
+
+   return mysql_fetch_assoc($retrieveClient);
+}
+
+function calcTimeSpent($project = NULl){
 	$query = "SELECT SUM(time_amt) AS time_amt FROM time ";
-	if($currentProject != null){
-		$query .= " WHERE project_id = $currentProject ";
+	if($project != null){
+		$query .= " WHERE project_id = $project ";
 	}
 	$retrieve = mysql_query($query);
 	$results = mysql_fetch_assoc($retrieve);
@@ -185,7 +214,7 @@ function calcTimeSpent(){
 function calcTimeForTask($timeArray){
 	$total = 0;
 	foreach($timeArray as $time){
-		$total += strtotime($time['time']);
+		$total += $time['time'];
 	}
 	return $total;
 }
@@ -277,6 +306,15 @@ function formatDateForDb ($date) {
    $values = explode("/", $date);
    return $values[2] . "-" . $values[0] . "-" . $values[1];
 }
+
+function printErrors ($errs) {
+   $html = "<ul class='errors'>";
+   foreach ($errs as $e) {
+      $html .= "<li>$e</li>";
+   }
+   echo $html;
+}
+
 
 
 ?>
