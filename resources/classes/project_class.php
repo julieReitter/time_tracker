@@ -48,7 +48,6 @@ class Project {
       } else {
          $newQuery .= " , '$this->endDate' );";
       }
-      echo $newQuery;
 		mysql_query($newQuery);
 	}
 

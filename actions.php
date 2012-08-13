@@ -46,8 +46,7 @@
          $p = new Project();
 			$p->create($elements['name*'], $elements['budget*'],
                     $elements['rate'], $elements['client'], $elements['end-date']);
-			print_r($elements['client']);
-         //header("Location: index.php");
+			header("Location: index.php");
       }else{
 			global $value, $errors;
 			$value = $elements;
