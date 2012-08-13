@@ -29,7 +29,7 @@ function createTable($tableData, $options){
 		foreach($value as $title =>$data){
 			$html .= "<td class='$title'>" . $data . "</td>";
 		}
-		$html .= "<td class='options'><a href='#' class='opt-icon'>o</a><ul>";
+		$html .= "<td class='options'><a href='#' class='opt-icon'></a><ul>";
 		
       // Row Options Setup -- Need ID
       foreach($options as $opt){

@@ -6,10 +6,10 @@
 	//Format data to create table
    if (isset($_GET['status']) && $_GET['status'] == 'completed') {
       $task = getAllTasks($currentProject, NULL, 1);
-      $link = "<a href='tasks.php'>View Incomplete Tasks</a>";
+      $link = "<a href='tasks.php' class='tasks-toggle button'>View Incomplete Tasks</a>";
    } else {
       $task = getAllTasks($currentProject);
-      $link = "<a href='tasks.php?status=completed'>View Complete Tasks</a>";
+      $link = "<a href='tasks.php?status=completed' class='tasks-toggle button'>View Complete Tasks</a>";
    }
 	$taskData = array();
 	$taskData['header'] = array("Tasks $link");
@@ -77,7 +77,7 @@
       $taskForm->dropDown("task[expected][1]", $hrsMin['min'], ifIsset($value['expected'][1]));
       $taskForm->label("task[due_date]", "Due Date");
       $taskForm->textField("task[due_date]", false, ifIsset($value['due_date']));
-      $taskForm->drawForm("new-task", "tasks.php", "Add&nbsp;Task");
+      $taskForm->drawForm("new-task", "tasks.php", "Add\nTask");
    }
     if(isset($errors)){
 		printErrors($errors);

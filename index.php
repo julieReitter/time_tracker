@@ -38,6 +38,9 @@
 			<ul class="highlights">
 				<?php
 					$tasks = getAllTasks($proj->id, 3);
+               if(count($tasks) < 1 ) {
+                  echo "No Tasks Have Been Saved";
+               }
 					foreach($tasks as $task):
 				?>
 				<li class="task">
@@ -51,7 +54,6 @@
 					</span>
 					<h3><?php echo $task->title; ?></h3>
 					<p><?php echo $task->notes;?></p>
-					<span class="button timer"></span>
 				</li>
 				<?php endforeach; //Tasks loop ?>
 			</ul>
@@ -92,18 +94,20 @@
 					}
 				?>
 				<div class="full-bar">
-					<div class="bar time" style="width:<?php echo $timeBarWidth . "%"; ?>"></div>
+					<div class="bar time" title="Time" style="width:<?php echo $timeBarWidth . "%"; ?>"></div>
 				</div>
 				<div class="full-bar">
-					<div class="bar budget" style="width:<?php echo $budgetBarWidth . "%"; ?>"></div>
+					<div class="bar budget" title="Budget" style="width:<?php echo $budgetBarWidth . "%"; ?>"></div>
 				</div>
 			</div>
 			
 		</div><!-- Close Project Module -->
 		<?php endforeach; ?>
+      <div class="clearfix"></div>
 		<div class="new">
-			<h4><a href="create_project.php">Create New Project</a></h4>
+			<h4><a href="create_project.php" class="button">Create New Project</a></h4>
 		</div>
 	</section><!-- Close Projects -->
 	
 </section><!--Close Content-->
+<div class="tip"></div>

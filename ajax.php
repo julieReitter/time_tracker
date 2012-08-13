@@ -12,7 +12,7 @@
       $end = $_POST['end'];
             
       $total = $_POST['total'];
-      if (isset($_POST['task'])){
+      if (isset($_POST['task'])) {
          $task = $_POST['task'];
       }else {
          $task = null;
@@ -31,6 +31,32 @@
       
       $task = new Task();
       $task -> update($id, " status='1' , date_completed='$date' ");     
+   }
+   
+   if( isset($_POST['type']) && $_POST['type'] == 'noti' ) {
+      $project = $_POST['project'];
+      $task = $_POST['task'];
+      
+      $projectQuery = "SELECT project_name FROM projects WHERE project_id = $project ";
+      $retrieveProject = mysql_query($projectQuery);
+      
+      $taskQuery = "SELECT task_title FROM tasks WHERE task_id = $task ";
+      $retrieveTask = mysql_query($taskQuery);
+      
+      if($retrieveProject){
+         $projectName = mysql_fetch_assoc($retrieveProject);
+      } else {
+         $projectName = null;
+      }
+      
+      if($retrieveTask){
+         $taskName = mysql_fetch_assoc($retrieveTask);
+      } else {
+         $taskName = null;
+      }
+
+      $response = array("project" => $projectName['project_name'], "task" => $taskName['task_title']);
+      echo json_encode($response);
    }
 
 

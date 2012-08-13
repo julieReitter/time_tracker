@@ -117,6 +117,16 @@ header{
 		}
 		
 	}
+   
+   .timer-noti {
+      /*display: none;*/
+      float: right;
+      margin: 12px;
+      color: @light-blue;
+      font-size: 12px;
+      font-weight: bold;
+      text-shadow: 0 -1px 0 #000;
+   }
 	
 }
 
@@ -141,6 +151,11 @@ header{
 
 .timing {
    .gradient(@pink) !important;
+   a{
+     background-image: url(../images/layout/pause.png) !important;
+     background-position: center !important;
+     background-repeat: no-repeat;
+   }
 }
 
 #calendar {
@@ -178,6 +193,11 @@ header{
 /***************************************************
  *  PROJECT MODULES
  **************************************************/
+
+.new {
+   clear: both;
+   margin-top: 15px;
+}
 
 .project {
 	.header {
@@ -350,6 +370,8 @@ header{
 		th{
 			padding: 15px;
 			border-bottom: solid 1px lighten(@gray, 15%);
+         font-weight:bold;
+         text-transform: uppercase;
 		}
 		
 	}
@@ -380,6 +402,17 @@ header{
 		
 		&.options {
          width: 20px;
+        
+        .opt-icon {
+            .rounded(100px);
+            .link-block;
+            background-color: @blue;
+            background-image: url(../images/layout/option_icon.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 20px;
+            width: 20px;
+        }
          
         ul {
           .rounded(10px);
@@ -414,7 +447,17 @@ header{
 		&.milestone {
 			width: 5%;
 		}		
-	} /* end td */ 
+	} /* end td */
+   
+   .tasks-toggle {
+      padding: 5px 10px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 70%;
+   }
+   
+   
 } /* end .data table */
 
 /***************************************************
@@ -426,7 +469,8 @@ header{
 	.module;
 	width: 300px;
 	margin-right: 25px;
-   	
+   position: relative;
+      
 	h3{
 		/*TODO : OOCSS fix this to be more global */
 		font-weight: bold;
@@ -449,14 +493,170 @@ header{
 	}
 	
 	input[type="submit"] {
-		display: block;
+      .rounded(100px);
+      display: block;
+      width: 75px;
+      height: 75px;
+      margin: 10px auto;
+      padding: 10px;
+      background-color: @blue;
+      color: @white;
+      font-weight: bold;
+      font-size: 11px;
+      text-transform: uppercase;
+      text-align: center;
+      border: solid 5px lighten(@blue, 20%);
+
+      &:hover {
+         background-color: @teal;
+         border: solid 5px lighten(@teal, 20%);
+      }
+      
 	}
-	input[type="text"], textarea{
-		width: 60%;
-	}
-	
+	input[type="text"], input[type="password"], textarea{
+      width: 60%;
+      padding: 3px 0;
+      border: solid 1px @light-blue;
+      background: -webkit-linear-gradient(top, @light-blue 0%, @white 100%);
+      background: -moz-linear-gradient(top, @light-blue 0%, @white 100%);
+      background: -o-linear-gradient(top, @light-blue 0%, @white 100%);
+      background: -linear-gradient(top, @light-blue 0%, @white 100%);
+   }
+   
+   form:before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 55px;
+      border: double 3px #e0e0e0;
+      width: 90px;
+   }
+   form:after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 55px;
+      border: double 3px #e0e0e0;
+      width: 90px;
+      right: 15px;
+   }	
+}
+
+
+/*
+ * LOGIN / SIGNUP FORMS
+ */
+
+.login-wrapper {
+   h1 {
+     font-size: 400%;
+     font-weight: bold;
+     text-align: center;
+     text-transform: uppercase;
+     margin-top: 100px;
+   }
+   
+   h2 {
+      font-size: 110%;
+      font-weight: bold;
+      text-align: center;
+      text-transform: uppercase;
+      color: @blue;
+   }
+   
+   #login {
+      .center(300px);
+      float: none;
+      margin-top: 30px !important;
+   }
+   
+   #signup {
+      .center(300px);
+      display: none;
+      float: none;
+      margin-top: 30px !important;
+   }
+   
+   .button {
+      .center(175px);
+      margin-top: 20px;
+   }
+}
+
+#new-project {
+   .center(300px);
+   float: none;
+   
+   .errors {
+      top: -35px;
+      right: -320px;
+   }
+}
+
+#client-info {
+   .center(960px);
+   margin-top: 30px;
+   padding-top: 30px;
+   border-top: dotted 1px @gray;
+   
+   .data {
+      min-width: 550px;
+   }
+}
+
+.errors {
+   position: absolute;
+   margin-top: 30px;
+   z-index: 100;
+   
+   li {
+      width: 300px;
+      margin: 10px 0;
+      padding: 10px 0;
+      background-color: @pink;
+      border: solid 1px darken(@pink, 10%);
+      box-shadow: inset 0 1px 0 lighten(@pink, 20%);
+      color: @white;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 0 -1px 0 darken(@pink, 15%);
+   }
+   
+}
+
+.button {
+   .gradient (@teal);
+   .rounded(10px);
+   padding: 10px;
+   font-weight: bold;
+   text-align: center;
+   text-shadow: 0 -1px 0 darken(@teal, 10%);
+   text-transform: uppercase;
+   color: @white;
+   border: solid 1px darken(@teal, 10%);
+   box-shadow: inset 0 1px 0 lighten(@teal, 30%),
+                     0 1px 0 darken(@teal, 30%);
+   
+   &:hover {
+      .reverse-gradient(@teal);
+      box-shadow: inset 0 1px 0 lighten(@teal, 10%),
+                        0 1px 0 darken(@teal, 10%);
+   }
+}
+
+.tip {
+   .rounded(10px);
+   display: none;
+   width: 50px;
+   height: 20px;
+   padding: 5px;
+   background: @white;
+   color: @teal;
+   border: solid 1px @teal;
+   text-align: center;
 }
 
 div.ui-datepicker{
  font-size:14px !important;
 }
+

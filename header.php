@@ -2,10 +2,11 @@
 	require("resources/connection.php");
 	require("resources/functions.php");
 	
+   
 	session_start();
 	$user = $_SESSION['user_id'];
 	if(empty($user)){
-		header("Location: login.php");	
+      header("Location: login.php");	
 	}
 	
 	$currentProject = null;
@@ -77,12 +78,13 @@
 					</select>
 				</li>
 			</ul>
-		</nav>
+      </nav>
 		<nav id="general-nav" class="button-nav fr">
 			<ul>
-				<li><a href="#" class="play"></a></li>
+				<li id="general-play"><a href="#" class="play"></a></li>
 				<li><a href="settings.php" class="settings"></a></li>
 				<li><a href="logout.php" class="logout"></a></li>
 			</ul>
-		</nav>
+      </nav>
+      <span class="timer-noti"></span>
 	</header>

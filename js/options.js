@@ -4,7 +4,7 @@ $(document).ready( function (){
    $(".options").hover(showOptions, hideOptions);
    
    $(".options").on("click", ".delete", deleteRecord);
-   $(".options").on("click", ".complete", completeTask);
+   $(".options").on("click", ".complete", completeTask);   
    
    $(".project-menu .add").hover(showOptions, hideOptions);
    $(".project-menu .contact-client").hover(showOptions, hideOptions);

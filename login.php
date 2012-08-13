@@ -77,46 +77,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Daily Grind Login</title>
+<title>Daily Grind | Time Tracking &amp Project Managment</title>
+<!-- Styles -->
+<link rel="stylesheet" type="text/css" href="<?php echo ROOT . "/resources/lib/chosen.css";?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo ROOT . "/resources/lib/jquery.datepicker.ui.min.css";?>" />
+<link rel="stylesheet/less" type="text/css" href="<?php echo ROOT . "/css/main.less";?>"/>
+<!-- Third Party Scripts-->
+<script src="<?php echo ROOT . "/resources/lib/jquery-1.7.2.min.js";?>" type="text/javascript"></script>
+<script src="<?php echo ROOT . "/resources/lib/less-1.3.0.min.js";?>" type="text/javascript"></script>
+<script src="<?php echo ROOT . "/resources/lib/chosen.jquery.min.js";?>" type="text/javascript"></script>
+<script src="<?php echo ROOT . "/resources/lib/jquery.cookie.js";?>" type="text/javascript"></script>
+<script src="<?php echo ROOT . "/resources/lib/jquery.datepicker.ui.min.js";?>" type="text/javascript"></script>
+<!-- Application Scripts-->
+<script src="<?php echo ROOT . "/js/events.js";?>" type="text/javascript"></script>
+<script src="<?php echo ROOT . "/js/options.js";?>" type="text/javascript"></script>
 </head>
 
 <body>
-	<form name="login" method="post" action="login.php">
-		<input type="hidden" name="postback" value="set"/>
-		<label for="email">Email:</label>
-		<input type="text" name="email" id="email" value="<?php if(isset($login_email)) echo $login_email;?>"/>
-		<span class="error"><?php if(isset($error['login_email'])) echo $error['login_email'];?></span>
-		<br/>
-		<label for="password">Password:</label>
-		<input type="password" name="password" id="password"/>
-		<span class="error"><?php if(isset($error['login_pass'])) echo $error['login_pass'];?></span>
-		<br/>
-		<input type="submit" value="Login"/>
-	</form>
-	
-	<form name="signup" method="post" action="login.php">
-		<input type="hidden" name="signup-postback" value="set"/>
-		<label for="first">First Name:</label>
-		<input type="text" name="first" id="first"  value="<?php if(isset($firstName)) echo $firstName;?>"/>
-		<span class="error"><?php if(isset($error['first'])) echo $error['first'];?></span>
-		<br/>
-		<label for="last">Last Name:</label>
-		<input type="text" name="last" id="last" value="<?php if(isset($lastName)) echo $lastName;?>"/>
-		<span class="error"><?php if(isset($error['last'])) echo $error['last'];?></span>
-		<br/>
-		<label for="email">Email:</label>
-		<input type="text" name="email" id="email" value="<?php if(isset($email)) echo $email;?>"/>
-		<span class="error"><?php if(isset($error['email'])) echo $error['email'];?></span>
-		<br/>
-		<label for="password">Password:</label>
-		<input type="password" name="password" id="password" />
-		<br/>
-		<label for="confirm">Confirm Password</label>
-		<input type="password" name="confirm" id="confirm"/>
-		<span class="error"><?php if(isset($error['password'])) echo $error['password'];?></span>
-		<br/>
-		<input type="submit" value="Sign Up"/>
-	</form>
-		
+   <section id="content" class="login-wrapper">
+      <h1>Daily Grind</h1>
+      <h2>A project Management tool for your time, tasks and expenses</h2>
+      <a href="#" class="signup-btn button">Sign Up its FREE!</a>
+      <div class="new-form" id="login">
+         <h3>Login</h3>
+         <form name="login" method="post" action="login.php">
+            <input type="hidden" name="postback" value="set"/>
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" value="<?php if(isset($login_email)) echo $login_email;?>"/>
+            <span class="error"><?php if(isset($error['login_email'])) echo $error['login_email'];?></span>
+            <br/>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password"/>
+            <span class="error"><?php if(isset($error['login_pass'])) echo $error['login_pass'];?></span>
+            <br/>
+            <input type="submit" value="Login"/>
+         </form>
+      </div>
+      <div class="new-form" id="signup">
+         <h3>Signup</h3>
+         <form name="signup" method="post" action="login.php">
+            <input type="hidden" name="signup-postback" value="set"/>
+            <label for="first">First Name:</label>
+            <input type="text" name="first" id="first"  value="<?php if(isset($firstName)) echo $firstName;?>"/>
+            <span class="error"><?php if(isset($error['first'])) echo $error['first'];?></span>
+            <br/>
+            <label for="last">Last Name:</label>
+            <input type="text" name="last" id="last" value="<?php if(isset($lastName)) echo $lastName;?>"/>
+            <span class="error"><?php if(isset($error['last'])) echo $error['last'];?></span>
+            <br/>
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" value="<?php if(isset($email)) echo $email;?>"/>
+            <span class="error"><?php if(isset($error['email'])) echo $error['email'];?></span>
+            <br/>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" />
+            <br/>
+            <label for="confirm">Confirm Password:</label>
+            <input type="password" name="confirm" id="confirm"/>
+            <span class="error"><?php if(isset($error['password'])) echo $error['password'];?></span>
+            <br/>
+            <input type="submit" value="Sign Up"/>
+         </form>
+      </div>
+   </section>
 </body>
 </html>

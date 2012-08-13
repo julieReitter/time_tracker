@@ -64,8 +64,34 @@
    float:right;
 }
 
+.clearfix {
+   height: 1px;
+   clear: both;
+}
+
+.span-half {
+   width: 50%;
+}
+
 .module{
-	.shadow(lighten(@gray, 0%));
-	background: @white;
+	//.shadow(lighten(@gray, 0%));
+	.paper-shadow;
+   background: @white;
 	padding: 15px;
+}
+
+.paper-shadow{
+   border-bottom: solid 1px #e0e0e0;
+   -webkit-box-shadow: 0 5px 0 -4px #fff,
+                       0 5px 0 -3px #e0e0e0,
+                       0 11px 0 -8px #fff,
+                       0 11px 0 -7px #e0e0e0;
+	-moz-box-shadow: 0 5px 0 -4px #fff,
+                    0 5px 0 -3px #e0e0e0,
+                    0 11px 0 -8px #fff,
+                    0 11px 0 -7px #e0e0e0;
+	box-shadow: 0 5px 0 -4px #fff,
+               0 5px 0 -3px #e0e0e0,
+               0 11px 0 -8px #fff,
+               0 11px 0 -7px #e0e0e0;
 }

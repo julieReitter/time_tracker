@@ -1,22 +1,54 @@
 $(document).ready(function () {
-   var currentProject = null;
+   //var currentProject = null,
+   //    taskId = null;
 	
 	//CALLS
+   $(".signup-btn").on("click", toggleSignup);   
+   
 	$(".project-select select").chosen().change(changeProject);
 	$("#new-time select").change(updateDuration);
    	
    $("#general-nav").on("click", ".play", generalTimer);
-   $(".project-menu .play").on("click", "a", generalTimer)
-   
+   $(".project-menu .play").on("click", "a", generalTimer);
+   $(".options .play").on("click", generalTimer);
+
    $("input[name='task[due_date]']").datepicker();
    $("input[name='income[date*]']").datepicker();
    $("input[name='project[end-date]']").datepicker();
    
-   if($.cookie("start") != null){
-      $("#general-nav .play").parent().addClass("timing");
-   }
-	
+   $(".full-bar").hover(showTip, hideTip);
+   
+   var fullContentWidth = $("#content").width();
+   dayWidth = Math.floor((fullContentWidth - 350) / 7);
+   $(".day").width(dayWidth + "px");
+   
+   $(window).resize(function(){
+      var contentWidth = $("#content").width(),
+          moduleDayWidth = Math.floor((contentWidth - 350) / 7);
+      $(".day").width(moduleDayWidth + "px");
+   });
+   
 	// CALLBACK FUNCTIONS
+   function setCurrentProject() {
+      var project = $(".project-select select").val();
+      if (project != "all") {
+         currentProject = project;
+      }else {
+         currentProject = null;
+      }
+      return currentProject;
+   }
+   
+   function toggleSignup (event) {
+      var $loginForm = $("#login"),
+          $signupForm = $("#signup");
+      
+      event.preventDefault();
+      $loginForm.fadeOut(function(){
+         $signupForm.fadeIn();
+      });
+   }
+   
 	function changeProject (event) {
 		window.location.href = location.pathname + "?project=" + $(this).val();
 	}
@@ -60,34 +92,43 @@ $(document).ready(function () {
          $form.find("select[name^=time]").trigger("liszt:updated");
       }
 	}
-   
+
    // Main Timer Setup
    // TODO: make reusable for other timers
    function generalTimer(event) {
       var $this = $(this),
-          currentDate = new Date();
-   
-      event.preventDefault();
-      console.log(currentDate);
-      console.log("Current Project " + currentProject);
+          currentDate = new Date(),
+          timerSalt;
       
-      if($.cookie("start") != null){
+      event.preventDefault();
+   
+      if($.cookie("start") != null){   
          saveTimeToDb($.cookie("start"), currentDate); // save to db
          $.cookie("start", null, {expires: 0}); // Remove cookie
-         $this.parent().removeClass("timing"); // Remove timing class
-      }else {         
-         $.cookie("start", currentDate , {expires: 7});
-         if($this.attr("name") != undefined){
-            currentProject = $this.attr("name");
-         }
-         $this.parent().addClass("timing");
+         $this.closest("li").removeClass("timing"); // Remove timing class
+         $("#general-play").removeClass("timing");
+         timerNoti.hideNoti();
+      }else {
+         currentProject = setCurrentProject();
+         taskId = $(this).closest("tr").attr("id");
+         
+         timerSalt = currentDate + " | " + currentProject + " | " + taskId;
+         $.cookie("start", timerSalt , {expires: 7});
+         timerNoti.getData(currentProject, taskId);
+         
+         $this.closest("li").addClass("timing");
+         $("#general-play").addClass("timing");
       }
+      
+      console.log(currentDate);
+      console.log("Current Project " + currentProject);
+      console.log("Current Task Id " +  taskId);
    }
    
    // Format the time for database entry
    function calcTimeInMin(startDate, endDate) {
       var totalTime, start, end;
-      
+            
       start = new Date(startDate).getTime();
       end = new Date(endDate).getTime();
       totalTime = Math.round( (( end - start ) / 1000 ) / 60 );
@@ -96,12 +137,16 @@ $(document).ready(function () {
       return totalTime;
    }
    
-   function saveTimeToDb (startDate, endDate) {
-      var start, end, amount;
+   function saveTimeToDb (startSalt, endDate) {
+      var start, end, amount, startDate;
       
-      amount = calcTimeInMin(startDate, endDate)
+      startDate = startSalt.split(" | ");
+      currentProject = startDate[1];
+      taskId = startDate[2];
+            
+      amount = calcTimeInMin(startDate[0], endDate)
       
-      start = new Date(startDate);
+      start = new Date(startDate[0]);
       end = new Date(endDate);
       
       formattedStart = numberPad(start.getHours()) + ":" + numberPad(start.getMinutes());
@@ -113,7 +158,7 @@ $(document).ready(function () {
       $.ajax ({
          url: "ajax.php",
          type: "POST",
-         data: {type: "timer", start: formattedStart, end: formattedEnd, total: amount, project: currentProject},
+         data: {type: "timer", start: formattedStart, end: formattedEnd, total: amount, project: currentProject, task: taskId},
          success: function(){
             alert("The Time has been saved");
          }
@@ -128,6 +173,81 @@ $(document).ready(function () {
       }
    }
    
+   function showTip(event) {
+      var $this = $(this),
+          width,
+          content = $this.find(".bar").attr("title"),
+          x = event.pageX,
+          y = event.pageY;
+      
+      console.log(content);
+      width = $this.width() / 2;
+      $(".tip").html(content)
+               .css({"position": "absolute", "top": y, "left": x})
+               .fadeIn();
+      
+   }
+   
+   function hideTip(event) {
+      $(".tip").fadeOut();
+   }
+   
+   /*************************
+    * Timer Notifications
+    ************************/
+   
+   var timerNoti = function(){
+      var $container = $(".timer-noti"),
+          currentProject,
+          taskId;
+      
+      var getData = function(currentProject, taskId){
+         $.ajax ({
+            url: "ajax.php",
+            type: "POST",
+            data: {type: "noti", project: currentProject, task: taskId },
+            success: function(response){
+               displayNoti(response);
+            }
+         });
+      };
+      
+      var displayNoti = function(response) {
+         var html = '',
+             data = $.parseJSON(response);
+            
+         if(data.project != null) {
+            html += "Project: " +  data.project + " ";
+         }else {
+            html += " All Projects ";
+         }
+         
+         if(data.task != null){
+            html += " | Task: " + data.task;
+         }
+         console.log(html);
+         $container.html(html);
+         $container.fadeIn();
+      };
+      
+      var hideNoti = function() {
+        $container.fadeOut(); 
+      };
+      
+      return {
+         getData: getData,
+         hideNoti: hideNoti
+      }
+   }();
+   
+   if($.cookie("start") != null){
+      $("#general-nav .play").parent().addClass("timing");
+      
+      timerSalt = $.cookie("start");
+      timerData = timerSalt.split(" | ");
+
+      timerNoti.getData(timerData[1], timerData[2]);
+   }
    
 });
 

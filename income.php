@@ -23,7 +23,7 @@
 		$c ++;
 	}
 	
-	$incomeOptions = array("+", "<a href='#' class='delete' name='income'>Delete</a>");
+	$incomeOptions = array("<a href='#' class='delete' name='income'>Delete</a>");
 	
 	//Create Money Add Form
    echo "<section id='content'>";
@@ -41,14 +41,14 @@
       $moneyForm->textField("income[amt*]", false, ifIsset($value['amt*']));
       $moneyForm->label("income[desc]", "Description");
       $moneyForm->textArea("income[desc]", 20, 3, ifIsset($value['desc']));
-      $moneyForm->drawForm("new-income", "income.php", "Add&nbsp;Income");
+      $moneyForm->drawForm("new-income", "income.php", "Add\nIncome");
    }
+   if(isset($errors)){
+		printErrors($errors);
+	}
    echo "</div>"; //Closes new-form;
 
-	if(isset($errors)){
-		echo print_r($errors);
-	}
-	
+
 	echo createTable($incomeData, $incomeOptions);
 	echo "</section>";
 ?>

@@ -44,7 +44,7 @@
       }else{
 			global $value, $errors;
 			$value = $elements;
-			$errors = $valid->errors;
+			$errors['project'] = $valid->errors;
 		}
    }
    
@@ -141,7 +141,7 @@
 		}else {
 			global $value, $errors;
 			$value = $elements;
-			$errors = $valid->errors;
+			$errors['client'] = $valid->errors;
 		}
 	}
 

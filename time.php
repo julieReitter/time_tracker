@@ -74,11 +74,9 @@
       $timeForm->markup("<Br/>");
       $timeForm->label("time[task]", "Task");
       $timeForm->dropDown("time[task]", $taskNames);
-      $timeForm->drawForm("new-time", "time.php", "Add Time");
+      $timeForm->drawForm("new-time", "time.php", "Add\nTime");
    }
 	echo "</div>";
-   
-   echo date("Y-m-d", time());
 	
 	if(isset($errors)){
 		echo print_r($errors);
