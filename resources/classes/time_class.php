@@ -1,6 +1,13 @@
 
 <?php
-	
+/**********************************************************
+TIME CLASS
+This class sets up a time object that takes all the elements
+of the time that is required for the database
+
+The object also creates or destroys the data in the database
+**********************************************************/
+
 class Time {
 	//=========================
 	// PROPERTIES
@@ -33,18 +40,11 @@ class Time {
 		mysql_query($newQuery);
 
 	}
-	
-	public function read(){
 		
-	}
-	
 	public function destroy($id){
 		$deleteQuery = "DELETE FROM time WHERE time_id='$id' ";
       mysql_query($deleteQuery);
 	}
 	
-	public function update(){
-		
-	}
 }
 ?>

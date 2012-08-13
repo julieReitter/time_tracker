@@ -1,5 +1,11 @@
 <?php
-	
+/**********************************************************
+TASK CLASS
+This class sets up a task object that takes all the elements
+of the task that is required for the database
+
+The object also creates or destroys the data in the database
+**********************************************************/ 
 class Task{
 	//=========================
 	// PROPERTIES

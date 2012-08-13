@@ -1,4 +1,8 @@
 <?php
+/**********************************************************
+* This class validates form elements and returns an
+* array of errors.
+*********************************************************/
 
 class FormValidation extends Form{
    public $errors = array();

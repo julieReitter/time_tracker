@@ -1,4 +1,11 @@
 <?php
+   /**********************************************************
+   * VALIDATES all the forms and then CREATES the database
+   * item based on the value of the form type set in the
+   * hidden form field.
+   * It sets the global $values and $errors for the forms. 
+   *********************************************************/
+
    if(!empty($_POST['form_type'])){
       $type = $_POST['form_type'];
       switch($type){

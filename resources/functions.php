@@ -1,8 +1,13 @@
 <?php
+/**********************************************************
+* This file has all the major FUNCTIONS for the web app 
+*********************************************************/
 require_once("connection.php");
-
 $salt = "csi350";
 
+/***********************
+* USER FUNCTIONS
+**********************/
 function newUser($firstName, $lastName, $email, $password){
 	global $salt;
 	$user = NULL;
@@ -44,9 +49,11 @@ function validateUser($email, $password){
 	return $user;	
 }//close Validate User
 
-/******************************
- * PROJECT FUNCTIONS
- ******************************/
+
+/***********************
+* GET FUNCTIONS
+**********************/
+
 function getAllProjects($user){
 	//Gets all projects and returns array of project objects
 	$getAllQuery = "SELECT * FROM projects WHERE user_id = $user";
@@ -198,6 +205,15 @@ function getClientById($id) {
    return mysql_fetch_assoc($retrieveClient);
 }
 
+function getMinFromDuration($duration){
+	/// $duration = [HH][MM];
+	return ($duration[0] * 60) +  $duration[1];
+}
+
+/***********************
+* CALCULATION FUNCTIONS
+**********************/
+
 function calcTimeSpent($project = NULl){
 	$query = "SELECT SUM(time_amt) AS time_amt FROM time ";
 	if($project != null){
@@ -232,33 +248,16 @@ function calcIncomeTotal($projectId = NULL){
 	return $income;
 }
 
+
+/***********************
+* FORMATTING FUNCTIONS
+**********************/
 function formatTimeFromMin($totalTime = 0){
 	$h = floor($totalTime/60);
 	if($h < 10) $h = '0' . $h;
 	$m = $totalTime % 60;
 	if($m < 10) $m = '0' . $m;
 	return $h . "h " . $m . "m";
-}
-
-function getMinFromDuration($duration){
-	/// $duration = [HH][MM];
-	return ($duration[0] * 60) +  $duration[1];
-}
-
-function spamcheck($field){
-  $field=filter_var($field, FILTER_SANITIZE_EMAIL);
-
-  if(filter_var($field, FILTER_VALIDATE_EMAIL)){
-    return TRUE;
-  }else{
-    return FALSE;
-  }
-}
-
-function ifIsset(&$var, $default = NULL) {
-   $s = $var;
-	return $s;
-	#isset($var) ? $var : $default;
 }
 
 function timeSelectFormatter () {
@@ -305,6 +304,27 @@ function formatDateForDb ($date) {
    // Converts 05/12/1990 to 1990-05-12
    $values = explode("/", $date);
    return $values[2] . "-" . $values[0] . "-" . $values[1];
+}
+
+
+/***********************
+* MISC FUNCTIONS
+**********************/
+
+function spamcheck($field){
+  $field=filter_var($field, FILTER_SANITIZE_EMAIL);
+
+  if(filter_var($field, FILTER_VALIDATE_EMAIL)){
+    return TRUE;
+  }else{
+    return FALSE;
+  }
+}
+
+function ifIsset(&$var, $default = NULL) {
+   $s = $var;
+	return $s;
+	#isset($var) ? $var : $default;
 }
 
 function printErrors ($errs) {

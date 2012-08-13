@@ -1,4 +1,9 @@
 <?php
+   /**********************************************************
+   * AJAX for DELETE actions, based on the datatype passed
+   * through the AJAX. 
+   *********************************************************/
+
    require("resources/connection.php");
    require("resources/classes/project_class.php");
 	require("resources/classes/task_class.php");

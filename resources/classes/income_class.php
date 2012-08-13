@@ -1,14 +1,13 @@
 <?php
-/* #########################################
+/**********************************************************
 INCOME AND EXPENSE CLASS
-This class sets up an income object that 
-takes an amount and description. The amount
-if positive acts as an income amt and if 
-negative is an expense. 
+This class sets up an income object that takes an amount
+and description. The amount if positive acts as an income
+amt and if negative is an expense. 
 
-The object follows CRUD to manipulate the 
-database. 
-##########################################*/ 
+The object also creates and destroys the income or expense
+from the database
+**********************************************************/
 	
 class Income {
 	//=========================

@@ -1,9 +1,18 @@
 <?php
+   /**********************************************************
+   * This file querys all the TASKS for all projects
+   * or for current project if set. 
+   * It formats the data to display in the table
+   * It creates and displays the form for a new task entry. 
+   *********************************************************/
+
 	include("header.php");
 	include("actions.php");
 	include("includes/table.php");
 
-	//Format data to create table
+	/***********************
+   * FORMAT DATA FOR TABLE
+   **********************/
    if (isset($_GET['status']) && $_GET['status'] == 'completed') {
       $task = getAllTasks($currentProject, NULL, 1);
       $link = "<a href='tasks.php' class='tasks-toggle button'>View Incomplete Tasks</a>";
@@ -55,7 +64,9 @@
 	
    $hrsMin = timeSelectFormatter();
    
-	//create Form
+	/***********************
+    * CREATE FORM
+    **********************/
    echo "<section id='content'>";
 	echo "<div class='new-form'><h3>New Task</h3>";
    

@@ -1,4 +1,8 @@
 <?php
+   /**********************************************************
+   * This class creates form elements when each method is called.
+   * The form is drawn when drawForm is called
+   *********************************************************/
 
    class Form {
       

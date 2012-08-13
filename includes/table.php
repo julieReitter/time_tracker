@@ -1,10 +1,17 @@
 <?php
+/**********************************************************
+* This include takes 2 associate arrays and returns the
+* html for a table that is formatted with the data
+* it is passed.
+*
+* Format for tableData
+* $data['header'] = array()
+* $data['row'][$i]['col'] = 'data'
+* $options = array()
+*********************************************************/
 	
 function createTable($tableData, $options){
-	#echo "<pre>";
-	#print_r($tableData);
-	#echo "</pre>";
-	
+
 	if(empty($tableData['row'])){
 		$tableData['row'][0]['empty'] = "No data has been saved";
 	}

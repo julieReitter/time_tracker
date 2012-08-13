@@ -1,13 +1,12 @@
 <?php
 
-/* #########################################
+/**********************************************************
 PROJECT CLASS
-This class sets up a project object that 
-had a name, budget, project type and rate.
+This class sets up a project object that had a name, budget,
+project type and rate.
 
-The object follows CRUD to manipulate the 
-database. 
-##########################################*/ 
+The object also creates or destroys the data in the database
+**********************************************************/ 
 
 class Project {
 	//=========================
@@ -52,23 +51,7 @@ class Project {
       echo $newQuery;
 		mysql_query($newQuery);
 	}
-	
-	public function get($columns, $params=null, $by=null, $limit=null){
-		//performs query to created a project array
-		$projectQuery = "SELECT $columns FROM projects WHERE project_id = $this->id ";
-		if($params) $projectQuery .= "AND " . $params;
-		if($by) $projectQuery .= $by;
-		if($limit) $projectQuery .= $limit;
-		
-		$results = my_sql($projectQuery);
-		
-		$obj = mysql_fetch_object($results);
-		
-		$this->name = $obj.project_name;
-		$this->budget = $obj.project_budget;
-		$this->rate = $obj.hr_rate;
-		$this->client = $obj.client_id;
-	}
+
 	
 	public function destroy($id){
 		$queryE = "DELETE FROM expenses WHERE project_id=$id ";

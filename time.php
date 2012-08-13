@@ -1,9 +1,18 @@
 <?php
+   /**********************************************************
+    * This file querys all the TIMES for all projects
+    * or for current project if set. 
+    * It formats the data to display in the table
+    * It creates and displays the form for a new time entry. 
+    *********************************************************/
+
 	include("header.php");
 	include("actions.php");
 	include("includes/table.php");
 	
-	//Format data to create table
+   /***********************
+   * FORMAT DATA FOR TABLE
+   **********************/
 	$time = getAllTime($currentProject);
 	$timeSpent = calcTimeSpent($currentProject);
 	$timeData = array();
@@ -45,8 +54,11 @@
    foreach( $tasks as $task ) {
       $taskNames[$task->id] = $task->title;
    }
-	//Create Form
-	// TODO: create dropdowns for start/end to control user input
+	
+   
+   /***********************
+    * CREATE FORM
+    **********************/
 	$hrsMin = timeSelectFormatter();
 	
    echo "<section id='content'>";

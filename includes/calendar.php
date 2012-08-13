@@ -1,4 +1,7 @@
 <?php
+/**********************************************************
+* Gets the data and formats the weekly calendar 
+*********************************************************/
 
 	$calendarQuery = "SELECT task_title, due_date FROM tasks
 		WHERE project_id in (

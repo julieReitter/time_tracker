@@ -1,6 +1,4 @@
 $(document).ready(function () {
-   //var currentProject = null,
-   //    taskId = null;
 	
 	//CALLS
    $(".signup-btn").on("click", toggleSignup);   
@@ -94,7 +92,6 @@ $(document).ready(function () {
 	}
 
    // Main Timer Setup
-   // TODO: make reusable for other timers
    function generalTimer(event) {
       var $this = $(this),
           currentDate = new Date(),
@@ -119,10 +116,6 @@ $(document).ready(function () {
          $this.closest("li").addClass("timing");
          $("#general-play").addClass("timing");
       }
-      
-      console.log(currentDate);
-      console.log("Current Project " + currentProject);
-      console.log("Current Task Id " +  taskId);
    }
    
    // Format the time for database entry
@@ -133,7 +126,6 @@ $(document).ready(function () {
       end = new Date(endDate).getTime();
       totalTime = Math.round( (( end - start ) / 1000 ) / 60 );
       
-      console.log(totalTime + " mins");
       return totalTime;
    }
    
@@ -151,9 +143,6 @@ $(document).ready(function () {
       
       formattedStart = numberPad(start.getHours()) + ":" + numberPad(start.getMinutes());
       formattedEnd = numberPad(end.getHours()) + ":" + numberPad(end.getMinutes());
-      
-      console.log(formattedStart);
-      console.log(formattedEnd);
       
       $.ajax ({
          url: "ajax.php",
@@ -180,7 +169,6 @@ $(document).ready(function () {
           x = event.pageX,
           y = event.pageY;
       
-      console.log(content);
       width = $this.width() / 2;
       $(".tip").html(content)
                .css({"position": "absolute", "top": y, "left": x})
@@ -225,7 +213,6 @@ $(document).ready(function () {
          if(data.task != null){
             html += " | Task: " + data.task;
          }
-         console.log(html);
          $container.html(html);
          $container.fadeIn();
       };

@@ -1,8 +1,19 @@
 <?php
+   /**********************************************************
+   * This file querys all the INCOME / EXPENSES for all projects
+   * or for current project if set. 
+   * It formats the data to display in the table
+   * It creates and displays the form for a new income or
+   * expense entry based on the amount value. 
+   **********************************************************/
+
 	include("header.php");
 	include("actions.php");
 	include("includes/table.php");
 	
+    /***********************
+   * FORMAT DATA FOR TABLE
+   **********************/
 	$income = getAllIncome($currentProject);
 	$incomeData = array();
 	$incomeData['header'] = array("Income and Expenses");
@@ -25,7 +36,9 @@
 	
 	$incomeOptions = array("<a href='#' class='delete' name='income'>Delete</a>");
 	
-	//Create Money Add Form
+	/***********************
+   * CREATE FORM
+   **********************/
    echo "<section id='content'>";
 	echo "<div class='new-form'><h3>New Income/Expense</h3>";
 	

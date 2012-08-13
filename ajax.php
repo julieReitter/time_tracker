@@ -1,4 +1,9 @@
 <?php
+   /**********************************************************
+   * AJAX requests for javascript TIMERS, TASK COMPLETION
+   * and TIMER NOTIFICATION
+   *********************************************************/
+
    require("resources/connection.php");
    require("resources/functions.php");
    require("resources/classes/project_class.php");
